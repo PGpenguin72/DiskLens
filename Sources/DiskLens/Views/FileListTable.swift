@@ -12,7 +12,7 @@ struct FileListTable: View {
         Table(rows, selection: model.tableSelection, sortOrder: $sortOrder) {
             TableColumn("名稱", value: \.name) { row in
                 NameCell(row: row, checked: model.multiSelectMode ? model.selection.contains(row.id) : nil,
-                         onToggle: { model.toggleSelection(row.id) })
+                         onToggle: { model.checkCircleTapped(row.id) })
             }
                 .width(min: 160, ideal: 280)
             TableColumn("大小", value: \.size) { SizeCell(size: $0.size) }

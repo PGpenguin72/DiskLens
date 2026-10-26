@@ -53,14 +53,25 @@ final class AppModel {
         Binding(get: { self.selection }, set: { self.applyTableSelection($0) })
     }
 
+    /// Row the table toggled last, and when — a click on a row's check circle reaches both the table
+    /// (on mouse-down) and the circle (on mouse-up); the circle must not undo the table's toggle.
+    @ObservationIgnored private var lastTableToggle: (id: NodeID, at: Date)?
+
     private func applyTableSelection(_ new: Set<NodeID>) {
         guard multiSelectMode else { selection = new; return }
         // A plain click reports just the clicked row: toggle it. Shift/⌘/drag/⌘A report several: take them.
         if new.count == 1, let id = new.first {
-            if selection.contains(id) { selection.remove(id) } else { selection.insert(id) }
+            toggleSelection(id)
+            lastTableToggle = (id, Date())
         } else if !new.isEmpty {
             selection = new
         }
+    }
+
+    /// Click on a row's check circle. Skipped when the same click already toggled the row via the table.
+    func checkCircleTapped(_ id: NodeID) {
+        if let last = lastTableToggle, last.id == id, Date().timeIntervalSince(last.at) < 0.6 { return }
+        toggleSelection(id)
     }
 
     func toggleSelection(_ id: NodeID) {

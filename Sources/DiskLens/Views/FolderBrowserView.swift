@@ -127,7 +127,7 @@ private struct FolderTable: View {
             TableColumn("名稱", value: \.name) { row in
                 NameCell(row: row, dotColor: model.chartColorIndex[row.id].map(Theme.color),
                          checked: model.multiSelectMode ? model.selection.contains(row.id) : nil,
-                         onToggle: { model.toggleSelection(row.id) })
+                         onToggle: { model.checkCircleTapped(row.id) })
                     .onHover { inside in
                         if inside { model.highlighted = row.id } else if model.highlighted == row.id { model.highlighted = nil }
                     }
