@@ -51,7 +51,7 @@ private struct AISettings: View {
                     Text("目前沒有可用的 AI 工具。").foregroundStyle(.secondary)
                     ForEach(ai.providers.filter { !$0.isUsable }) { p in
                         LabeledContent(p.info.displayName) {
-                            Text(p.unavailableReason ?? "").font(.caption).foregroundStyle(.secondary)
+                            Text(p.unavailableReason?.message ?? "").font(.caption).foregroundStyle(.secondary)
                         }
                     }
                 } else {
@@ -70,7 +70,7 @@ private struct AISettings: View {
                     }
                     ForEach(ai.providers.filter { !$0.isUsable }) { p in
                         LabeledContent(p.info.displayName) {
-                            Text(p.unavailableReason ?? "").font(.caption).foregroundStyle(.secondary)
+                            Text(p.unavailableReason?.message ?? "").font(.caption).foregroundStyle(.secondary)
                         }
                     }
                 }

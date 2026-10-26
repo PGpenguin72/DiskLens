@@ -16,6 +16,13 @@ rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
 cp "$BIN" "$APP/Contents/MacOS/DiskLens"
 
+echo "==> Compiling the string catalog"
+xcrun xcstringstool compile "$ROOT/Sources/DiskLens/Resources/Localizable.xcstrings" \
+    --output-directory "$APP/Contents/Resources"
+for lang in zh-Hant zh-Hans en; do
+    [ -f "$APP/Contents/Resources/$lang.lproj/Localizable.strings" ] || { echo "error: $lang.lproj missing" >&2; exit 1; }
+done
+
 ICON_KEY=""
 if command -v iconutil >/dev/null; then
     ICONSET="$(mktemp -d)/DiskLens.iconset"
@@ -41,7 +48,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
     <key>CFBundleVersion</key><string>$VERSION</string>
     <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
     <key>CFBundleDevelopmentRegion</key><string>zh-Hant</string>
-    <key>CFBundleLocalizations</key><array><string>zh-Hant</string></array>
+    <key>CFBundleLocalizations</key><array><string>zh-Hant</string><string>zh-Hans</string><string>en</string></array>
     <key>LSMinimumSystemVersion</key><string>26.0</string>
     <key>LSApplicationCategoryType</key><string>public.app-category.utilities</string>
     <key>NSHighResolutionCapable</key><true/>

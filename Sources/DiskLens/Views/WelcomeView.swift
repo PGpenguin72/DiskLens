@@ -15,9 +15,9 @@ struct WelcomeView: View {
                     .font(.system(size: 56))
                     .foregroundStyle(.orange)
             } title: {
-                "掃描失敗"
+                Text("掃描失敗")
             } subtitle: {
-                message
+                Text(message)
             }
         case .idle, .finished:
             Hero {
@@ -31,9 +31,9 @@ struct WelcomeView: View {
                     Image(systemName: "internaldrive").font(.system(size: 64))
                 }
             } title: {
-                "看看空間都跑去哪了"
+                Text("看看空間都跑去哪了")
             } subtitle: {
-                "掃描整顆磁碟，用環狀圖一眼看出誰最佔空間。檔案只會移到垃圾桶，不會直接刪除。"
+                Text("掃描整顆磁碟，用環狀圖一眼看出誰最佔空間。檔案只會移到垃圾桶，不會直接刪除。")
             }
         }
     }
@@ -42,16 +42,17 @@ struct WelcomeView: View {
 /// Centered glass card: artwork, title, subtitle and the scan buttons.
 private struct Hero<Art: View>: View {
     @ViewBuilder var art: Art
-    var title: () -> String
-    var subtitle: () -> String
+    var title: () -> Text
+    var subtitle: () -> Text
 
     var body: some View {
         VStack(spacing: 26) {
             art
             VStack(spacing: 8) {
-                Text(title())
+                title()
                     .font(.system(size: 30, weight: .bold, design: .rounded))
-                Text(subtitle())
+                    .multilineTextAlignment(.center)
+                subtitle()
                     .font(.title3)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)

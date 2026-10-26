@@ -1,0 +1,22 @@
+# Crowdin configuration (https://crowdin.github.io/crowdin-cli/configuration).
+# The String Catalog is a multilingual file: the source (zh-Hant) and every translation live in the
+# same Localizable.xcstrings, so source and translation point at the same path.
+# Used by .github/workflows/crowdin.yml; see docs/TRANSLATING.md.
+project_id_env: CROWDIN_PROJECT_ID
+api_token_env: CROWDIN_PERSONAL_TOKEN
+base_path: .
+base_url: https://api.crowdin.com
+preserve_hierarchy: true
+
+files:
+  - source: /Sources/DiskLens/Resources/Localizable.xcstrings
+    translation: /Sources/DiskLens/Resources/Localizable.xcstrings
+    multilingual: true
+    # Crowdin calls the two Chinese variants zh-TW / zh-CN; the app uses Apple's script codes.
+    languages_mapping:
+      locale:
+        zh-TW: zh-Hant
+        zh-CN: zh-Hans
+      osx_locale:
+        zh-TW: zh-Hant
+        zh-CN: zh-Hans

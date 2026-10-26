@@ -192,12 +192,12 @@ final class AIAssistant {
                     panel.answers[item.path] = answer
                     cache.store(answer, for: item, providerID: provider.id)
                 }
-                if matched.isEmpty { panel.error = AIError.unparsable.localizedDescription }
+                if matched.isEmpty { panel.error = AIError.unparsable.message }
                 saveCache()
             } catch is CancellationError {
             } catch {
                 guard !Task.isCancelled else { return }
-                panel.error = error.localizedDescription
+                panel.error = userMessage(for: error)
             }
             panel.isLoading = false
         }

@@ -2,10 +2,27 @@ import Foundation
 
 public enum Protection: Sendable, Equatable {
     case allowed
-    /// Deleting is blocked; the string explains why.
-    case blocked(String)
+    /// Deleting is blocked; the reason says why.
+    case blocked(ProtectionReason)
     /// Allowed, but the user must confirm the warning.
-    case warn(String)
+    case warn(ProtectionReason)
+}
+
+/// Why a path is protected. Core has no user-facing text: the app turns these into localized messages.
+public enum ProtectionReason: Sendable, Equatable {
+    /// A system or user root folder (/, ~/Documents, …) that must never be trashed as a whole.
+    case essentialFolder
+    /// Inside the sealed system (/System, /usr, /bin, /sbin).
+    case systemFile
+    /// System-level data (/Library, /private): may affect other apps or need admin rights.
+    case systemLevel
+    /// App data under ~/Library: the app may need to be set up or signed in again.
+    case appData
+}
+
+/// Thrown by `FileActions.trash` / `move` for a blocked path.
+public struct ProtectedItemError: Error, Equatable {
+    public let reason: ProtectionReason
 }
 
 public enum FileActions {
@@ -20,15 +37,15 @@ public enum FileActions {
 
     public static func protection(for path: String) -> Protection {
         let p = path.hasSuffix("/") && path.count > 1 ? String(path.dropLast()) : path
-        if blockedRoots.contains(p) { return .blocked("這是系統或使用者的重要資料夾，不能整個刪除。") }
+        if blockedRoots.contains(p) { return .blocked(.essentialFolder) }
         if p.hasPrefix("/System/") || p.hasPrefix("/usr/") || p.hasPrefix("/bin/") || p.hasPrefix("/sbin/") {
-            return .blocked("macOS 系統檔案受保護，無法刪除。")
+            return .blocked(.systemFile)
         }
         if p.hasPrefix("/private/") || p.hasPrefix("/Library/") {
-            return .warn("這是系統層級的檔案，刪除可能影響其他 App 或需要管理員權限。")
+            return .warn(.systemLevel)
         }
         if p.hasPrefix(home + "/Library/") {
-            return .warn("這是 App 的資料。刪除後該 App 可能需要重新設定或登入。")
+            return .warn(.appData)
         }
         return .allowed
     }
@@ -37,7 +54,7 @@ public enum FileActions {
     @discardableResult
     public static func trash(_ url: URL) throws -> URL? {
         if case .blocked(let why) = protection(for: url.path) {
-            throw NSError(domain: "DiskLens", code: 1, userInfo: [NSLocalizedDescriptionKey: why])
+            throw ProtectedItemError(reason: why)
         }
         var result: NSURL?
         try FileManager.default.trashItem(at: url, resultingItemURL: &result)
@@ -47,7 +64,7 @@ public enum FileActions {
     /// Moves the item into `folder`, keeping its name.
     public static func move(_ url: URL, into folder: URL) throws -> URL {
         if case .blocked(let why) = protection(for: url.path) {
-            throw NSError(domain: "DiskLens", code: 1, userInfo: [NSLocalizedDescriptionKey: why])
+            throw ProtectedItemError(reason: why)
         }
         let dest = folder.appendingPathComponent(url.lastPathComponent)
         try FileManager.default.moveItem(at: url, to: dest)

@@ -17,22 +17,22 @@ public struct AppleOnDeviceProvider: AIProvider {
     public var info: AIProviderInfo { Self.info }
 
     /// Why the model cannot be used right now, or `nil` when it is ready.
-    public static var unavailableReason: String? {
+    public static var unavailableReason: AIUnavailableReason? {
         #if canImport(FoundationModels)
         switch SystemLanguageModel.default.availability {
         case .available:
             return nil
         case .unavailable(.deviceNotEligible):
-            return String(localized: "這台 Mac 不支援 Apple Intelligence。")
+            return .deviceNotEligible
         case .unavailable(.appleIntelligenceNotEnabled):
-            return String(localized: "Apple Intelligence 尚未開啟。請到「系統設定」>「Apple Intelligence 與 Siri」開啟後再試。")
+            return .appleIntelligenceNotEnabled
         case .unavailable(.modelNotReady):
-            return String(localized: "Apple 的裝置端模型還在下載或準備中，請稍後再試。")
+            return .modelNotReady
         case .unavailable:
-            return String(localized: "Apple 的裝置端模型目前無法使用。")
+            return .modelUnavailable
         }
         #else
-        return String(localized: "這個版本的 macOS 不提供 Apple 裝置端模型。")
+        return .unsupportedOS
         #endif
     }
 
@@ -58,7 +58,7 @@ public struct AppleOnDeviceProvider: AIProvider {
             throw Self.map(error)
         }
         #else
-        throw AIError.unavailable(Self.unavailableReason ?? "")
+        throw AIError.unavailable(Self.unavailableReason ?? .unsupportedOS)
         #endif
     }
 
@@ -68,13 +68,13 @@ public struct AppleOnDeviceProvider: AIProvider {
         case .exceededContextWindowSize:
             return .contextTooLarge
         case .assetsUnavailable:
-            return .unavailable(String(localized: "Apple 的裝置端模型還在下載或準備中，請稍後再試。"))
+            return .unavailable(.modelNotReady)
         case .guardrailViolation, .refusal:
-            return .failed(String(localized: "Apple 的模型拒絕回答這個請求。"))
+            return .refused
         case .unsupportedLanguageOrLocale:
-            return .unavailable(String(localized: "Apple 的裝置端模型尚不支援目前的語言。"))
+            return .unavailable(.unsupportedLanguage)
         case .rateLimited, .concurrentRequests:
-            return .failed(String(localized: "模型正忙，請稍後再試。"))
+            return .busy
         default:
             return .failed(error.localizedDescription)
         }

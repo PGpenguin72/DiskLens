@@ -113,9 +113,9 @@ public enum CLIRunner {
             // Envelopes such as Claude's report the error in stdout.
             if result.status != 0, (try? AIResponseParser.parse(stdout)) == nil {
                 let message = lastLines(stderr.isEmpty ? stdout : stderr)
-                return .failed(message.isEmpty ? String(localized: "結束代碼 \(result.status)") : message)
+                return message.isEmpty ? .exitStatus(result.status) : .failed(message)
             }
-            if stdout.isEmpty { return .failed(lastLines(stderr).isEmpty ? String(localized: "沒有任何輸出") : lastLines(stderr)) }
+            if stdout.isEmpty { return lastLines(stderr).isEmpty ? .noOutput : .failed(lastLines(stderr)) }
         }
         return nil
     }

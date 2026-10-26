@@ -9,11 +9,11 @@ enum SidebarItem: Hashable, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .folders: "資料夾"
-        case .largeFiles: "大檔案"
-        case .apps: "App"
-        case .fileTypes: "檔案類型"
-        case .cleanup: "可清理項目"
+        case .folders: String(localized: "資料夾")
+        case .largeFiles: String(localized: "大檔案")
+        case .apps: String(localized: "App")
+        case .fileTypes: String(localized: "檔案類型")
+        case .cleanup: String(localized: "可清理項目")
         }
     }
 
@@ -48,7 +48,7 @@ enum MinimumSize: Int64, CaseIterable, Identifiable {
 
     var title: String {
         switch self {
-        case .all: "全部"
+        case .all: String(localized: "全部")
         case .mb100: "> 100 MB"
         case .mb500: "> 500 MB"
         case .gb1: "> 1 GB"
@@ -66,12 +66,12 @@ struct TrashRequest: Identifiable {
     /// Number of selected items skipped because they are protected.
     let skipped: Int
 
-    var title: String { "要將 \(targets.count) 個項目丟到垃圾桶嗎？" }
+    var title: String { String(localized: "要將 \(targets.count) 個項目丟到垃圾桶嗎？") }
 
     var message: String {
-        var lines = ["可釋放約 \(ByteFormat.string(totalSize))。項目會移到垃圾桶，清空垃圾桶前都可以復原。"]
-        lines += warnings.map { "注意：" + $0 }
-        if skipped > 0 { lines.append("另有 \(skipped) 個受保護的項目會被略過。") }
+        var lines = [String(localized: "可釋放約 \(ByteFormat.string(totalSize))。項目會移到垃圾桶，清空垃圾桶前都可以復原。")]
+        lines += warnings.map { String(localized: "注意：\($0)") }
+        if skipped > 0 { lines.append(String(localized: "另有 \(skipped) 個受保護的項目會被略過。")) }
         return lines.joined(separator: "\n\n")
     }
 }

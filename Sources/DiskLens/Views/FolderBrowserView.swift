@@ -82,14 +82,14 @@ private struct ScanStats: View {
             let _ = model.revision
             GlassEffectContainer(spacing: 8) {
                 HStack(spacing: 8) {
-                    StatChip(symbol: "internaldrive.fill", value: ByteFormat.string(tree.size(dir)), caption: "這個資料夾", tint: Theme.used)
-                    StatChip(symbol: "doc.on.doc.fill", value: tree.fileCount(dir).formatted(), caption: "個檔案", tint: .teal)
-                    StatChip(symbol: "bolt.fill", value: String(format: "%.1f 秒", model.scanDuration ?? 0), caption: "掃描耗時", tint: .yellow)
+                    StatChip(symbol: "internaldrive.fill", value: ByteFormat.string(tree.size(dir)), caption: String(localized: "這個資料夾"), tint: Theme.used)
+                    StatChip(symbol: "doc.on.doc.fill", value: tree.fileCount(dir).formatted(), caption: String(localized: "個檔案"), tint: .teal)
+                    StatChip(symbol: "bolt.fill", value: scanSeconds, caption: String(localized: "掃描耗時"), tint: .yellow)
                     if model.unreadableCount > 0 {
                         Button {
                             model.showingUnreadable = true
                         } label: {
-                            StatChip(symbol: "exclamationmark.triangle.fill", value: "\(model.unreadableCount)", caption: "讀不到", tint: .orange)
+                            StatChip(symbol: "exclamationmark.triangle.fill", value: model.unreadableCount.formatted(), caption: String(localized: "讀不到"), tint: .orange)
                         }
                         .buttonStyle(.plain)
                         .help("查看無法讀取的資料夾")
@@ -98,6 +98,11 @@ private struct ScanStats: View {
             }
             .fixedSize()
         }
+    }
+
+    private var scanSeconds: String {
+        let seconds = (model.scanDuration ?? 0).formatted(.number.precision(.fractionLength(1)))
+        return String(localized: "\(seconds) 秒")
     }
 }
 

@@ -20,14 +20,14 @@ extension AppModel {
     /// Why `ids` cannot be trashed or moved, or `nil` if at least one item can be.
     /// Very large selections are not pre-checked; protected items are skipped at request time.
     func blockReason(for ids: Set<NodeID>) -> String? {
-        guard let tree else { return "尚未掃描。" }
+        guard let tree else { return String(localized: "尚未掃描。") }
         guard ids.count <= 2_000 else { return nil }
         let targets = tree.topLevelTargets(ids)
-        guard !targets.isEmpty else { return "沒有可處理的項目。" }
+        guard !targets.isEmpty else { return String(localized: "沒有可處理的項目。") }
         var firstReason: String?
         for id in targets {
             if case .blocked(let why) = FileActions.protection(for: tree.path(id)) {
-                if firstReason == nil { firstReason = why }
+                if firstReason == nil { firstReason = why.message }
             } else {
                 return nil
             }
@@ -48,12 +48,12 @@ extension AppModel {
             switch FileActions.protection(for: tree.path(id)) {
             case .allowed:
                 allowed.append(id)
-            case .warn(let message):
+            case .warn(let reason):
                 allowed.append(id)
-                if !warnings.contains(message) { warnings.append(message) }
+                if !warnings.contains(reason.message) { warnings.append(reason.message) }
             case .blocked(let why):
                 skipped += 1
-                blockedReason = blockedReason ?? why
+                blockedReason = blockedReason ?? why.message
             }
         }
         guard !allowed.isEmpty else {
@@ -67,7 +67,7 @@ extension AppModel {
 
     func confirmTrash(_ request: TrashRequest) {
         pendingTrash = nil
-        perform(on: request.targets, failureTitle: "無法丟到垃圾桶") { url in
+        perform(on: request.targets, failureTitle: String(localized: "無法丟到垃圾桶")) { url in
             try FileActions.trash(url)
         }
     }
@@ -82,17 +82,17 @@ extension AppModel {
             return true
         }
         guard !targets.isEmpty else {
-            errorMessage = blockReason(for: ids) ?? "沒有可搬移的項目。"
+            errorMessage = blockReason(for: ids) ?? String(localized: "沒有可搬移的項目。")
             return
         }
         let message = targets.count == 1
-            ? "將「\(tree.name(targets[0]))」搬移到…"
-            : "將 \(targets.count) 個項目（\(ByteFormat.string(targets.reduce(0) { $0 + tree.size($1) }))）搬移到…"
-        guard let destination = Panels.chooseFolder(message: message, prompt: "搬移到這裡") else { return }
-        perform(on: targets, failureTitle: "無法搬移") { url in
+            ? String(localized: "將「\(tree.name(targets[0]))」搬移到…")
+            : String(localized: "將 \(targets.count) 個項目（\(ByteFormat.string(targets.reduce(0) { $0 + tree.size($1) }))）搬移到…")
+        guard let destination = Panels.chooseFolder(message: message, prompt: String(localized: "搬移到這裡")) else { return }
+        perform(on: targets, failureTitle: String(localized: "無法搬移")) { url in
             if destination.standardizedFileURL.path.hasPrefix(url.standardizedFileURL.path + "/")
                 || destination.standardizedFileURL == url.deletingLastPathComponent().standardizedFileURL {
-                throw CocoaError(.fileWriteFileExists, userInfo: [NSLocalizedDescriptionKey: "目的地與原位置相同或位於其內。"])
+                throw CocoaError(.fileWriteFileExists, userInfo: [NSLocalizedDescriptionKey: String(localized: "目的地與原位置相同或位於其內。")])
             }
             _ = try FileActions.move(url, into: destination)
         }
@@ -114,7 +114,7 @@ extension AppModel {
                         try operation(item.url)
                         outcome.done.append(item.id)
                     } catch {
-                        outcome.errors.append("\(item.url.lastPathComponent)：\(error.localizedDescription)")
+                        outcome.errors.append(String(localized: "\(item.url.lastPathComponent)：\(userMessage(for: error))"))
                     }
                 }
                 return outcome
@@ -123,8 +123,8 @@ extension AppModel {
             applyRemoval(outcome.done)
             if !outcome.errors.isEmpty {
                 let shown = outcome.errors.prefix(8).joined(separator: "\n")
-                let more = outcome.errors.count > 8 ? "\n…另有 \(outcome.errors.count - 8) 個錯誤" : ""
-                errorMessage = "\(failureTitle)：\n\(shown)\(more)"
+                let more = outcome.errors.count > 8 ? "\n" + String(localized: "…另有 \(outcome.errors.count - 8) 個錯誤") : ""
+                errorMessage = String(localized: "\(failureTitle)：\n\(shown)\(more)")
             }
         }
     }

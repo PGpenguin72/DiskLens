@@ -64,7 +64,7 @@ struct CapacityLegend: View {
 
 private struct LegendDot: View {
     let color: Color
-    let title: String
+    let title: LocalizedStringKey
     let value: Int64
 
     var body: some View {

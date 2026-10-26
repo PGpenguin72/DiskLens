@@ -95,9 +95,9 @@ public struct AIDetectedProvider: Sendable, Identifiable {
     public let location: String?
     public let version: String?
     /// Why the provider cannot be used right now (e.g. Apple Intelligence is off), or `nil`.
-    public let unavailableReason: String?
+    public let unavailableReason: AIUnavailableReason?
 
-    public init(provider: any AIProvider, location: String?, version: String?, unavailableReason: String? = nil) {
+    public init(provider: any AIProvider, location: String?, version: String?, unavailableReason: AIUnavailableReason? = nil) {
         self.provider = provider; self.location = location; self.version = version
         self.unavailableReason = unavailableReason
     }
@@ -107,32 +107,58 @@ public struct AIDetectedProvider: Sendable, Identifiable {
     public var isUsable: Bool { unavailableReason == nil }
 }
 
+/// Why a provider cannot be used right now. The app turns these into localized messages.
+public enum AIUnavailableReason: Sendable, Equatable {
+    /// This Mac does not support Apple Intelligence.
+    case deviceNotEligible
+    /// Apple Intelligence is turned off in System Settings.
+    case appleIntelligenceNotEnabled
+    /// The on-device model is still downloading or being prepared.
+    case modelNotReady
+    /// The on-device model is unavailable for another reason.
+    case modelUnavailable
+    /// This macOS version has no on-device model (FoundationModels missing).
+    case unsupportedOS
+    /// The on-device model does not support the current language.
+    case unsupportedLanguage
+}
+
 /// Errors shown to the user.
+///
+/// Core carries no user-facing text: the app localizes these (`AIError.message` in the app target).
+/// `errorDescription` is a plain English fallback for logs and command-line tools.
 public enum AIError: Error, Equatable, LocalizedError {
     case notLoggedIn(tool: String, command: String)
     case timedOut(seconds: Int)
+    /// The tool reported an error; the payload is the tool's own output.
     case failed(String)
+    /// The tool exited with a non-zero status and printed nothing useful.
+    case exitStatus(Int32)
+    /// The tool printed nothing.
+    case noOutput
+    /// The model refused to answer (guardrails).
+    case refused
+    /// The model is busy (rate-limited or another request is running).
+    case busy
     case unparsable
-    case unavailable(String)
+    case unavailable(AIUnavailableReason)
     case contextTooLarge
+    /// The tool could not be launched; the payload is the system's error message.
     case launchFailed(String)
 
     public var errorDescription: String? {
         switch self {
-        case .notLoggedIn(let tool, let command):
-            String(localized: "\(tool) 尚未登入。請先打開「終端機」執行一次 \(command) 並完成登入，再回來重試。")
-        case .timedOut(let seconds):
-            String(localized: "等了 \(seconds) 秒仍沒有回應，已停止。可以在設定中調長逾時時間後重試。")
-        case .failed(let message):
-            String(localized: "AI 工具回報錯誤：\(message)")
-        case .unparsable:
-            String(localized: "看不懂 AI 的回答格式，請重試一次。")
-        case .unavailable(let reason):
-            reason
-        case .contextTooLarge:
-            String(localized: "這次的內容超過模型能處理的長度。請少選幾個項目後再試。")
-        case .launchFailed(let message):
-            String(localized: "無法啟動 AI 工具：\(message)")
+        case .notLoggedIn(let tool, let command): "\(tool) is not signed in. Run \(command) in Terminal first."
+        case .timedOut(let seconds): "No response after \(seconds) seconds."
+        case .failed(let message): "The AI tool reported an error: \(message)"
+        case .exitStatus(let status): "The AI tool exited with status \(status)."
+        case .noOutput: "The AI tool produced no output."
+        case .refused: "The model declined to answer this request."
+        case .busy: "The model is busy."
+        case .unparsable: "The AI's answer could not be read."
+        case .unavailable(let reason): "The model is unavailable (\(reason))."
+        case .contextTooLarge: "The request is too long for the model."
+        case .launchFailed(let message): "Could not launch the AI tool: \(message)"
         }
     }
 }
