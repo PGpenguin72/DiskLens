@@ -16,12 +16,15 @@ struct SidebarView: View {
                         .tag(item)
                 }
             }
-            Section("即將推出") {
-                ForEach(SidebarItem.allCases.filter { !$0.isAvailable }) { item in
-                    Label(item.title, systemImage: item.symbol)
-                        .foregroundStyle(.tertiary)
-                        .selectionDisabled()
-                        .help("即將推出")
+            let upcoming = SidebarItem.allCases.filter { !$0.isAvailable }
+            if !upcoming.isEmpty {
+                Section("即將推出") {
+                    ForEach(upcoming) { item in
+                        Label(item.title, systemImage: item.symbol)
+                            .foregroundStyle(.tertiary)
+                            .selectionDisabled()
+                            .help("即將推出")
+                    }
                 }
             }
         }

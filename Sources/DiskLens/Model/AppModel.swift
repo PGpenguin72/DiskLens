@@ -129,6 +129,11 @@ final class AppModel {
 
     var isShowingSearch: Bool { hasTree && !searchText.trimmingCharacters(in: .whitespaces).isEmpty }
 
+    // MARK: Analysis
+
+    /// App attribution, file types and cleanup rules; refreshed after scans and lazily after removals.
+    @ObservationIgnored let analysis = AnalysisStore()
+
     // MARK: Actions & alerts
 
     var pendingTrash: TrashRequest?
@@ -242,6 +247,7 @@ final class AppModel {
         largeRows = []
         searchRows = []
         scanDuration = nil
+        analysis.reset()
     }
 
     private func finishScan(_ tree: FileTree, duration: TimeInterval) {
@@ -257,6 +263,12 @@ final class AppModel {
         runSearch(debounce: false)
         refreshEnvironment()
         loadSnapshots()
+        refreshAnalysis()
+    }
+
+    /// Recomputes the analysis views' data if the tree changed since their last run.
+    func refreshAnalysis() {
+        analysis.refreshIfNeeded(tree: tree, revision: revision)
     }
 
     // MARK: - Navigation

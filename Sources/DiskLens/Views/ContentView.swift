@@ -39,6 +39,11 @@ struct ContentView: View {
         }
         .task {
             model.loadSnapshots()
+            // Debug hook: open a sidebar view on launch (apps, fileTypes, cleanup, largeFiles).
+            if let name = ProcessInfo.processInfo.environment["DISKLENS_SIDEBAR"],
+               let item = SidebarItem.allCases.first(where: { "\($0)" == name }) {
+                model.sidebar = item
+            }
             // Debug hook for automated UI checks: start scanning this path right away.
             if let path = ProcessInfo.processInfo.environment["DISKLENS_AUTOSCAN"], !path.isEmpty {
                 model.startScan(URL(fileURLWithPath: path))
@@ -79,10 +84,12 @@ private struct DetailView: View {
                 FolderBrowserView()
             case .largeFiles:
                 LargeFilesView()
-            case .apps, .fileTypes, .cleanup:
-                ContentUnavailableView("即將推出", systemImage: model.sidebar.symbol,
-                                       description: Text("「\(model.sidebar.title)」會在之後的版本加入。"))
-                    .glassCard()
+            case .apps:
+                AppsView()
+            case .fileTypes:
+                FileTypesView()
+            case .cleanup:
+                CleanupView()
             }
         }
     }

@@ -5,6 +5,8 @@ import DiskLensCore
 struct FileListTable: View {
     let rows: [FileRow]
     @Binding var sortOrder: [KeyPathComparator<FileRow>]
+    /// Hides the date column, for narrow panes.
+    var compact = false
     @Environment(AppModel.self) private var model
 
     var body: some View {
@@ -25,8 +27,10 @@ struct FileListTable: View {
                     .help(row.folder)
             }
             .width(min: 160, ideal: 360)
-            TableColumn("修改日期", value: \.modified) { DateCell(row: $0) }
-                .width(92)
+            if !compact {
+                TableColumn("修改日期", value: \.modified) { DateCell(row: $0) }
+                    .width(92)
+            }
         }
         .scrollContentBackground(.hidden)
         .alternatingRowBackgrounds(.disabled)
