@@ -65,7 +65,7 @@ docs/                        privacy policy, terms, translating, App Store check
 
 - Match the surrounding code: concise, doc comments on types and non-obvious members, sparse inline comments.
 - Design language is Liquid Glass: `.glassCard()`, `.glassEffect`, `GlassEffectContainer`, `.buttonStyle(.glass / .glassProminent)`, colors from `Theme.palette`. Tables use `.scrollContentBackground(.hidden)`, `.alternatingRowBackgrounds(.disabled)` and `.overlayScrollers()`.
-- **Localization:** write UI text as Traditional Chinese literals (`Text("…")`, `Button("…")`, `String(localized: "…")`). Building with Xcode syncs them into `Localizable.xcstrings`; add zh-Hans and en translations there. Use whole sentences with interpolation, not concatenated fragments. Other languages come from Crowdin (see `docs/TRANSLATING.md`).
+- **Localization:** write UI text as Traditional Chinese literals (`Text("…")`, `Button("…")`, `String(localized: "…")`). Building with Xcode syncs them into `Localizable.xcstrings`; add zh-Hans and en translations there. Use whole sentences with interpolation, not concatenated fragments. **DiskLensCore has no user-facing text:** it returns reason codes and errors (`ProtectionReason`, `AIUnavailableReason`, `AIError`), and the app turns them into text in `Model/CoreMessages.swift`. If Xcode's build doesn't sync the catalog, build both schemes and run `xcrun xcstringstool sync Localizable.xcstrings --stringsdata <DerivedData>/**/*.stringsdata`. Other languages come from Crowdin (see `docs/TRANSLATING.md`).
 
 ## Testing the UI without disturbing the user
 
