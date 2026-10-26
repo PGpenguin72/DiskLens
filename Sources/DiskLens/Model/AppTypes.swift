@@ -1,7 +1,7 @@
 import Foundation
 import DiskLensCore
 
-/// Sidebar destinations. Only folders and large files exist in phase 1.
+/// Sidebar destinations.
 enum SidebarItem: Hashable, CaseIterable, Identifiable {
     case folders, largeFiles, apps, fileTypes, cleanup
 
@@ -27,7 +27,7 @@ enum SidebarItem: Hashable, CaseIterable, Identifiable {
         }
     }
 
-    var isAvailable: Bool { self == .folders || self == .largeFiles }
+    var isAvailable: Bool { true }
 }
 
 enum ScanState: Equatable {

@@ -44,8 +44,14 @@ enum SelfTest {
         model.searchText = ""
         spin { model.isSearching }
         if let png = ProcessInfo.processInfo.environment["DISKLENS_SNAPSHOT"] {
+            if let name = ProcessInfo.processInfo.environment["DISKLENS_SIDEBAR"],
+               let item = SidebarItem.allCases.first(where: { "\($0)" == name }) {
+                model.sidebar = item
+                spin { model.analysis.isRunning || model.analysis.apps == nil }
+            }
             snapshot(model: model, to: URL(fileURLWithPath: png))
         }
+        printAnalysis(model: model, tree: tree)
         benchmarkBusiestFolder(model: model, tree: tree)
 
         if ProcessInfo.processInfo.environment["DISKLENS_SELFTEST_TRASH"] == "1" {
@@ -69,6 +75,37 @@ enum SelfTest {
         try? rep.representation(using: .png, properties: [:])?.write(to: url)
         print("\nSnapshot written to \(url.path)")
         window.orderOut(nil)
+    }
+
+    /// Waits for the analysis passes and prints top apps, leftovers, file categories and cleanup rules.
+    private static func printAnalysis(model: AppModel, tree: FileTree) {
+        let store = model.analysis
+        let t0 = Date()
+        spin { store.isRunning || store.apps == nil }
+        let ms = { (key: String) in String(format: "%.0f ms", (store.timings[key] ?? 0) * 1000) }
+        print(String(format: "\nAnalysis finished in %.2f s (catalog %@, apps %@, file types %@, cleanup %@)",
+                     Date().timeIntervalSince(t0), ms("catalog"), ms("apps"), ms("fileTypes"), ms("cleanup")))
+        if let apps = store.apps {
+            print("\nTop apps (\(apps.apps.count) with data):")
+            for u in apps.apps.prefix(10) {
+                print("  \(pad(ByteFormat.string(u.total)))  \(u.app.name)  [本體 \(ByteFormat.string(u.size(.bundle))) / 資料 \(ByteFormat.string(u.size(.data))) / 快取 \(ByteFormat.string(u.size(.cache)))]")
+            }
+            print("\nPossible leftovers: \(apps.leftovers.count) groups, \(ByteFormat.string(apps.leftoverTotal))")
+            for g in apps.leftovers.prefix(8) {
+                print("  \(pad(ByteFormat.string(g.total)))  \(g.owner)  (\(g.locations.map { tree.path($0.node) }.prefix(3).joined(separator: ", ")))")
+            }
+        }
+        if let types = store.fileTypes {
+            print("\nFile types:")
+            for t in types.totals.sorted(by: { $0.size > $1.size }) {
+                print("  \(pad(ByteFormat.string(t.size)))  \(t.category.title)  (\(t.count) files)")
+            }        }
+        if let rules = store.cleanup {
+            print("\nCleanup rules (unique total \(ByteFormat.string(store.cleanupTotal))):")
+            for r in rules {
+                print("  \(pad(ByteFormat.string(r.total)))  \(r.rule.title)  [\(r.rule.safety.shortTitle)] \(r.items.count) items")
+            }
+        }
     }
 
     /// Times opening and name-sorting the folder with the most direct children.
