@@ -174,8 +174,9 @@ final class AppModel {
 
     func chooseFolderAndScan() {
         guard !isScanning else { return }
-        let home = URL(fileURLWithPath: NSHomeDirectory())
+        let home = URL(fileURLWithPath: UserHome.path)
         if let url = Panels.chooseFolder(message: "選擇要掃描的資料夾", prompt: "掃描", startingAt: home) {
+            ScanAccess.remember(url)   // sandbox: keep access for rescans
             startScan(url)
         }
     }
@@ -184,8 +185,10 @@ final class AppModel {
         if let scanRoot { startScan(scanRoot) }
     }
 
-    func startScan(_ root: URL) {
+    func startScan(_ requested: URL) {
         guard !isScanning else { return }
+        // Sandbox (App Store build): make sure the user has granted this location; no-op otherwise.
+        guard let root = ScanAccess.prepare(requested) else { return }
         resetTree()
         scanRoot = root
         scanState = .scanning

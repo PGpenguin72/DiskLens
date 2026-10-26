@@ -9,7 +9,7 @@ public enum Protection: Sendable, Equatable {
 }
 
 public enum FileActions {
-    private static let home = NSHomeDirectory()
+    private static let home = UserHome.path
 
     /// Paths that must never be trashed (exact match or any ancestor of them).
     private static let blockedRoots: [String] = [

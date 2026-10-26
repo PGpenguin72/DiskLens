@@ -21,11 +21,11 @@ public struct InstalledApp: Sendable, Hashable, Identifiable {
 /// Finds installed apps. Bundle paths come from the scanned tree where it covers the app folders,
 /// so only each app's Info.plist is read from disk; unreadable bundles fall back to their folder name.
 public enum AppCatalog {
-    public static func searchDirectories(home: String = NSHomeDirectory()) -> [String] {
+    public static func searchDirectories(home: String = UserHome.path) -> [String] {
         ["/Applications", "/System/Applications", home + "/Applications"]
     }
 
-    public static func load(tree: FileTree?, home: String = NSHomeDirectory()) -> [InstalledApp] {
+    public static func load(tree: FileTree?, home: String = UserHome.path) -> [InstalledApp] {
         var seenIDs: Set<String> = []
         var out: [InstalledApp] = []
         for path in appPaths(tree: tree, directories: searchDirectories(home: home)) {

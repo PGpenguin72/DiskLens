@@ -150,7 +150,7 @@ private struct RuleDetail: View {
                             .buttonStyle(.glassProminent)
                     } else {
                         Button("打開垃圾桶", systemImage: "trash") {
-                            NSWorkspace.shared.open(URL(fileURLWithPath: NSHomeDirectory() + "/.Trash"))
+                            NSWorkspace.shared.open(URL(fileURLWithPath: UserHome.path + "/.Trash"))
                         }
                         .buttonStyle(.glassProminent)
                         Text("請在 Finder 中清空垃圾桶。").font(.callout).foregroundStyle(.secondary)

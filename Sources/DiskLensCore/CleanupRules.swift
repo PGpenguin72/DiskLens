@@ -50,7 +50,7 @@ public enum CleanupRules {
         public var staleNodeModulesDays: Double = 90
         public var oldDownloadsDays: Double = 30
         public var oldLogsDays: Double = 30
-        public init(home: String = NSHomeDirectory(), now: Date = Date()) { self.home = home; self.now = now }
+        public init(home: String = UserHome.path, now: Date = Date()) { self.home = home; self.now = now }
     }
 
     /// Cache folders under ~/Library/Caches that have their own rule.

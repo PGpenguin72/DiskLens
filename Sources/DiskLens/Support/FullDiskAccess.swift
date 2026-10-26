@@ -1,5 +1,6 @@
 import AppKit
 import Darwin
+import DiskLensCore
 
 /// Detects whether the app has Full Disk Access (TCC "App Management / All Files").
 enum FullDiskAccess {
@@ -8,7 +9,7 @@ enum FullDiskAccess {
     /// Probes TCC-protected locations. Returns `true` when access is granted or cannot be determined.
     static func isGranted() -> Bool {
         if ProcessInfo.processInfo.environment["DISKLENS_FAKE_NO_FDA"] != nil { return false }
-        let home = NSHomeDirectory()
+        let home = UserHome.path
 
         // The system TCC database exists on every Mac and is only readable with Full Disk Access.
         let fd = open("/Library/Application Support/com.apple.TCC/TCC.db", O_RDONLY)

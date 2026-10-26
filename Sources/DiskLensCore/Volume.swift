@@ -26,6 +26,9 @@ public struct VolumeInfo: Sendable {
 /// Local APFS snapshots (Time Machine) — space that never shows up as files.
 public enum LocalSnapshots {
     public static func list() -> [String] {
+        #if APP_STORE
+        return []   // the sandboxed build doesn't spawn processes
+        #else
         let p = Process()
         p.executableURL = URL(fileURLWithPath: "/usr/bin/tmutil")
         p.arguments = ["listlocalsnapshots", "/"]
@@ -36,6 +39,7 @@ public enum LocalSnapshots {
         p.waitUntilExit()
         let out = String(data: pipe.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
         return out.split(separator: "\n").map(String.init).filter { $0.contains("com.apple") }
+        #endif
     }
 }
 

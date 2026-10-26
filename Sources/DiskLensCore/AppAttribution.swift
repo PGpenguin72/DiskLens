@@ -105,7 +105,7 @@ public enum AppAttribution {
         "com.openssh", "org.mozilla.updater",
     ]
 
-    public static func analyze(tree: FileTree, apps: [InstalledApp], home: String = NSHomeDirectory(),
+    public static func analyze(tree: FileTree, apps: [InstalledApp], home: String = UserHome.path,
                                extraKnownBundleIDs: Set<String> = []) -> AppAttributionReport {
         var idIndex: [String: Int] = [:]
         var nameIndex: [String: Int] = [:]
