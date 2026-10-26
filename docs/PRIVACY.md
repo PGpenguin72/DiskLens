@@ -4,7 +4,7 @@
 
 _Last updated: 2026-10-26_
 
-DiskLens is a disk-space analyzer that runs entirely on your Mac. This policy explains what data it touches and where that data goes. Short version: **DiskLens collects nothing and sends nothing anywhere.** The only exception is the optional AI feature, which you have to switch on yourself, and which hands a small amount of file metadata to an AI tool you already installed.
+DiskLens is a disk-space analyzer that runs entirely on your Mac. This policy explains what data it touches and where that data goes. Short version: **DiskLens collects nothing and sends nothing anywhere.** The only exception is the optional AI feature: you have to switch it on yourself, and if you pick a command-line AI tool instead of Apple's on-device model, it hands a small amount of file metadata to that tool.
 
 ## What DiskLens reads
 
@@ -28,7 +28,10 @@ Everything stays on your Mac:
 
 ### Optional AI feature
 
-If you choose to use "Ask AI", DiskLens launches an AI command-line tool that **you** installed and signed in to (for example Claude Code, Codex, Antigravity or opencode). Before the first request, DiskLens shows a consent screen naming the tool and previewing the exact text it will send.
+If you choose to use "Ask AI", you pick one of these providers. Before the first request to a provider, DiskLens shows a consent screen naming it and previewing the exact text it will send.
+
+- **Apple's on-device model** (Apple Intelligence; the only option in the Mac App Store version). The request is processed on your Mac by Apple's built-in model and **nothing is sent over the network**.
+- **An AI command-line tool that you installed and signed in to** (for example Claude Code, Codex, Antigravity or opencode; direct-download version only). The rest of this section applies to these tools.
 
 - **What is sent to that tool:** paths and names of the items you selected, their sizes, dates and item counts, the names of a few of the largest items inside a selected folder, and DiskLens's own classification. **File contents are never sent.**
 - **Where it goes:** the tool forwards that text to its vendor (for example Anthropic, OpenAI or Google) under **your** account. That vendor processes it under its own privacy policy and terms, and the request may count towards your plan's usage.

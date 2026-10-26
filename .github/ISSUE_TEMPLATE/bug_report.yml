@@ -1,0 +1,34 @@
+name: Bug report / 問題回報
+description: Something doesn't work as expected / 有東西不正常
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened? / 發生了什麼事？
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS version and Mac model / macOS 版本與機型
+      placeholder: "macOS 26.1, MacBook Air M3"
+    validations:
+      required: true
+  - type: dropdown
+    id: build
+    attributes:
+      label: Build / 版本
+      options:
+        - Direct download (GitHub) / 直接下載版
+        - Mac App Store
+        - Built from source / 自行建置
+    validations:
+      required: true
+  - type: textarea
+    id: crash
+    attributes:
+      label: Crash report (if any) / 當機報告（如果有）
+      description: Console.app › Crash Reports › DiskLens. Please remove private paths.
+      render: text

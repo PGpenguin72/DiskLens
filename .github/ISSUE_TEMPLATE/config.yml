@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Help translate DiskLens / 協助翻譯
+    url: https://github.com/PGpenguin72/DiskLens/blob/main/docs/TRANSLATING.md
+    about: Translations are managed on Crowdin.
