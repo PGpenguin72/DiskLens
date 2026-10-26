@@ -95,7 +95,7 @@ private struct RuleCard: View {
                         .font(.system(.callout, design: .rounded).weight(.bold))
                         .monospacedDigit()
                 }
-                SafetyBadge(safety: match.rule.safety, short: true)
+                CleanupSafetyBadge(safety: match.rule.safety, short: true)
                 Text(match.rule.summary)
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -109,7 +109,7 @@ private struct RuleCard: View {
     }
 }
 
-private struct SafetyBadge: View {
+private struct CleanupSafetyBadge: View {
     let safety: CleanupSafety
     var short = false
 
@@ -139,7 +139,7 @@ private struct RuleDetail: View {
                         .font(.system(.title2, design: .rounded).weight(.bold))
                         .monospacedDigit()
                 }
-                SafetyBadge(safety: match.rule.safety)
+                CleanupSafetyBadge(safety: match.rule.safety)
                 Text(match.rule.summary)
                     .font(.callout)
                     .foregroundStyle(.secondary)
