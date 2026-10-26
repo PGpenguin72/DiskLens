@@ -177,7 +177,7 @@ final class AppModel {
     func chooseFolderAndScan() {
         guard !isScanning else { return }
         let home = URL(fileURLWithPath: UserHome.path)
-        if let url = Panels.chooseFolder(message: "選擇要掃描的資料夾", prompt: "掃描", startingAt: home) {
+        if let url = Panels.chooseFolder(message: String(localized: "選擇要掃描的資料夾"), prompt: String(localized: "掃描"), startingAt: home) {
             ScanAccess.remember(url)   // sandbox: keep access for rescans
             startScan(url)
         }
@@ -229,7 +229,7 @@ final class AppModel {
             } catch is CancellationError {
                 scanState = .idle
             } catch {
-                scanState = .failed(error.localizedDescription)
+                scanState = .failed(userMessage(for: error))
             }
         }
     }

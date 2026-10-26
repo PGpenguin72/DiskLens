@@ -153,7 +153,7 @@ private struct SelectionDock: View {
                             .tint(.red)
                             .disabled(blocked != nil || model.isPerformingAction)
                             .keyboardShortcut(.delete, modifiers: .command)
-                            .help(blocked ?? "丟到垃圾桶（⌘⌫）")
+                            .help(blocked ?? String(localized: "丟到垃圾桶（⌘⌫）"))
                             .glassEffectID("trash", in: glass)
                         Button("取消選取", systemImage: "xmark") { model.selection = [] }
                             .labelStyle(.iconOnly)

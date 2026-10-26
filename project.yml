@@ -4,6 +4,8 @@ name: DiskLens
 options:
   deploymentTarget:
     macOS: "26.0"
+  # Source language of Localizable.xcstrings. XcodeGen fills knownRegions (zh-Hant, zh-Hans, en, Base)
+  # from the languages in the catalog; Packaging/Info.plist lists them in CFBundleLocalizations.
   developmentLanguage: zh-Hant
   createIntermediateGroups: true
 

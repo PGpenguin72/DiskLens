@@ -10,6 +10,9 @@ enum DiskLensMain {
         if let path = ProcessInfo.processInfo.environment["DISKLENS_AI_SELFTEST"], !path.isEmpty {
             AISelfTest.run(path: path)
         }
+        if ProcessInfo.processInfo.environment["DISKLENS_L10N_SELFTEST"] != nil {
+            L10nSelfTest.run()
+        }
         OverlayScrollerStyle.install()
         DiskLensApp.main()
     }

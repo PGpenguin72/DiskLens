@@ -217,7 +217,7 @@ struct AIPresentation: ViewModifier {
             }
             .sheet(isPresented: $ai.showingNoProvider) {
                 AINoProviderSheet(reasons: Dictionary(uniqueKeysWithValues: ai.providers.compactMap { p in
-                    p.unavailableReason.map { (p.id, $0) }
+                    p.unavailableReason.map { (p.id, $0.message) }
                 })) { ai.showingNoProvider = false }
             }
     }

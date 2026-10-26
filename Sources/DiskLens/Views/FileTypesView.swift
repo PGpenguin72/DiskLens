@@ -14,7 +14,7 @@ struct FileTypesView: View {
                 let category = report.total(store.selectedCategory)
                 HStack(spacing: 8) {
                     Image(systemName: store.selectedCategory.symbol).foregroundStyle(store.selectedCategory.color)
-                    Text("最大的\(store.selectedCategory.title)檔案").fontWeight(.semibold)
+                    Text("最大的\(store.selectedCategory.title)檔案").fontWeight(.semibold).lineLimit(1)
                     Text("共 \(category.count, format: .number) 個 · \(ByteFormat.string(category.size))")
                         .foregroundStyle(.secondary)
                     if store.categoryRows.count >= 500 {
@@ -87,7 +87,7 @@ private struct BreakdownCard: View {
                             Image(systemName: item.category.symbol)
                                 .foregroundStyle(item.category.color)
                                 .frame(width: 20)
-                            Text(item.category.title).lineLimit(1)
+                            Text(item.category.title).lineLimit(1).minimumScaleFactor(0.85)
                             Spacer(minLength: 4)
                             Text(ByteFormat.string(item.size))
                                 .monospacedDigit()

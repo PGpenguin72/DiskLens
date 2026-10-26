@@ -90,6 +90,7 @@ private struct RuleCard: View {
                     Text(match.rule.title)
                         .fontWeight(.semibold)
                         .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                     Spacer(minLength: 4)
                     Text(ByteFormat.string(match.total))
                         .font(.system(.callout, design: .rounded).weight(.bold))

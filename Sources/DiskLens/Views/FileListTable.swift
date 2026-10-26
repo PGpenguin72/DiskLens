@@ -61,8 +61,8 @@ struct LargeFilesView: View {
                     ProgressView().controlSize(.small)
                 }
                 Spacer()
-                StatChip(symbol: "arrow.up.doc.fill", value: "\(model.largeRows.count) 個", caption: "最大的檔案", tint: .pink)
-                StatChip(symbol: "sum", value: ByteFormat.string(model.largeRows.reduce(0) { $0 + $1.size }), caption: "合計", tint: Theme.used)
+                StatChip(symbol: "arrow.up.doc.fill", value: model.largeRows.count.formatted(), caption: String(localized: "最大的檔案"), tint: .pink)
+                StatChip(symbol: "sum", value: ByteFormat.string(model.largeRows.reduce(0) { $0 + $1.size }), caption: String(localized: "合計"), tint: Theme.used)
             }
             TopFilesStrip(rows: Array(model.largeRows.prefix(6)))
             FileListTable(rows: model.largeRows, sortOrder: $model.largeSort)

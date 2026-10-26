@@ -21,12 +21,16 @@ extension AppModel {
 }
 
 enum AILanguage {
-    /// Language the app's UI is shown in, so answers match it. The UI is written in Traditional
-    /// Chinese; once other localizations ship, the one the system picked for this app wins.
+    /// Language the app's UI is shown in (the localization the system picked for this app), so
+    /// answers match it. A bare binary without .lproj folders shows the zh-Hant source strings.
     static var current: String {
-        let localizations = Bundle.main.localizations.filter { $0 != "Base" }
-        guard !localizations.isEmpty else { return "zh-Hant-TW" }
-        return Bundle.preferredLocalizations(from: localizations).first ?? "zh-Hant-TW"
+        guard Bundle.main.localizations.contains(where: { $0 != "Base" }),
+              let picked = Bundle.main.preferredLocalizations.first else { return "zh-Hant-TW" }
+        switch picked {
+        case "zh-Hant": return "zh-Hant-TW"     // the source strings are written for Taiwan
+        case "zh-Hans": return "zh-Hans-CN"     // translated for Mainland China
+        default: return picked
+        }
     }
 }
 
@@ -37,7 +41,7 @@ extension FileTree {
         var note: String?
         switch FileActions.protection(for: path) {
         case .blocked: note = String(localized: "受 macOS 保護，DiskLens 不允許刪除")
-        case .warn(let message): note = message
+        case .warn(let reason): note = reason.message
         case .allowed: break
         }
         if isDataless(id) { note = String(localized: "iCloud 雲端佔位檔，內容不在這台 Mac 上") }

@@ -1,0 +1,74 @@
+# Syncs the String Catalog with Crowdin (see docs/TRANSLATING.md).
+# - Push to main that changes the catalog: upload the new / changed source strings.
+# - Weekly, or run by hand: download translations and open (or update) a pull request.
+# Does nothing until the CROWDIN_PROJECT_ID and CROWDIN_PERSONAL_TOKEN repository secrets exist.
+name: Crowdin
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - Sources/DiskLens/Resources/Localizable.xcstrings
+      - crowdin.yml
+  schedule:
+    - cron: "0 3 * * 1"   # Mondays 03:00 UTC
+  workflow_dispatch:
+    inputs:
+      upload_translations:
+        description: "Also upload the translations already in the repo (first sync only)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: crowdin
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    env:
+      CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
+      CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+    steps:
+      - name: Check secrets
+        id: secrets
+        run: |
+          if [ -n "$CROWDIN_PROJECT_ID" ] && [ -n "$CROWDIN_PERSONAL_TOKEN" ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Crowdin secrets are not set; skipping."
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.secrets.outputs.ready == 'true'
+
+      - name: Upload sources
+        if: steps.secrets.outputs.ready == 'true' && github.event_name == 'push'
+        uses: crowdin/github-action@v3
+        with:
+          config: crowdin.yml
+          upload_sources: true
+          upload_translations: false
+          download_translations: false
+
+      - name: Upload sources and download translations
+        if: steps.secrets.outputs.ready == 'true' && github.event_name != 'push'
+        uses: crowdin/github-action@v3
+        with:
+          config: crowdin.yml
+          upload_sources: true
+          upload_translations: ${{ inputs.upload_translations == true }}
+          download_translations: true
+          localization_branch_name: l10n_crowdin_translations
+          create_pull_request: true
+          pull_request_title: "Update translations from Crowdin"
+          pull_request_body: "New translations from [Crowdin](https://crowdin.com/project/disklens). Build with Xcode or `./scripts/build-app.sh` and check the changed languages before merging."
+          pull_request_base_branch_name: main
+          commit_message: "Update translations from Crowdin"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
