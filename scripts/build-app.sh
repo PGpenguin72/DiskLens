@@ -8,8 +8,8 @@ APP="$ROOT/dist/DiskLens.app"
 VERSION="0.1.0"
 
 echo "==> Building release binary"
-swift build -c release --product DiskLens
-BIN="$(swift build -c release --product DiskLens --show-bin-path)/DiskLens"
+swift build -c release --product DiskLens --arch arm64
+BIN="$(swift build -c release --product DiskLens --arch arm64 --show-bin-path)/DiskLens"
 
 echo "==> Assembling $APP"
 rm -rf "$APP"
