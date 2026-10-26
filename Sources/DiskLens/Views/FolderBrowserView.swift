@@ -144,6 +144,7 @@ private struct FolderTable: View {
         }
         .scrollContentBackground(.hidden)
         .alternatingRowBackgrounds(.disabled)
+        .overlayScrollers()
         .padding(6)
         .contextMenu(forSelectionType: NodeID.self) { ids in
             FileContextMenu(ids: ids)

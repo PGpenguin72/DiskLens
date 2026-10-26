@@ -114,6 +114,8 @@ private struct SelectionDock: View {
                     Button("取消選取", systemImage: "xmark") { model.selection = [] }
                         .labelStyle(.iconOnly)
                         .buttonStyle(.glass)
+                        .keyboardShortcut(.cancelAction)
+                        .help("取消選取（esc）")
                         .glassEffectID("clear", in: glass)
                 }
                 .controlSize(.large)
