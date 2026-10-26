@@ -2,3 +2,6 @@
 *.app
 dist/
 .claude/
+DiskLens.xcodeproj/
+.build-xcode/
+.build-appstore/
