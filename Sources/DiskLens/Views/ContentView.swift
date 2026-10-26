@@ -1,7 +1,7 @@
 import SwiftUI
 import DiskLensCore
 
-/// Main window: sidebar, overview header, the active view and the status bar.
+/// Main window: glass sidebar, ambient background, the active view and a floating selection bar.
 struct ContentView: View {
     @Environment(AppModel.self) private var model
 
@@ -9,25 +9,29 @@ struct ContentView: View {
         @Bindable var model = model
         NavigationSplitView {
             SidebarView()
-                .navigationSplitViewColumnWidth(min: 170, ideal: 190, max: 260)
+                .navigationSplitViewColumnWidth(min: 200, ideal: 220, max: 280)
         } detail: {
-            VStack(spacing: 0) {
-                OverviewHeader()
-                if !model.hasFullDiskAccess && !model.fullDiskAccessBannerDismissed {
-                    FullDiskAccessBanner()
+            ZStack(alignment: .bottom) {
+                AmbientBackground()
+                VStack(spacing: 12) {
+                    if !model.hasFullDiskAccess && !model.fullDiskAccessBannerDismissed {
+                        FullDiskAccessBanner()
+                    }
+                    DetailView()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-                Divider()
-                DetailView()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            .safeAreaInset(edge: .bottom, spacing: 0) {
-                StatusBar()
+                .padding(16)
+                // Leave room for the floating selection bar so it never covers the last rows.
+                .padding(.bottom, model.selection.isEmpty ? 0 : 58)
+                .animation(.spring(duration: 0.35), value: model.selection.isEmpty)
+                SelectionDock()
+                    .padding(.bottom, 22)
             }
         }
         .searchable(text: $model.searchText, placement: .toolbar, prompt: "搜尋檔案或資料夾名稱")
         .toolbar { MainToolbar() }
         .navigationTitle(model.hasTree ? model.scanRootDisplayName : "DiskLens")
-        .frame(minWidth: 900, minHeight: 560)
+        .frame(minWidth: 980, minHeight: 620)
         .modifier(ActionAlerts())
         .sheet(isPresented: $model.showingUnreadable) {
             UnreadableListSheet()
@@ -63,7 +67,59 @@ private struct DetailView: View {
             case .apps, .fileTypes, .cleanup:
                 ContentUnavailableView("即將推出", systemImage: model.sidebar.symbol,
                                        description: Text("「\(model.sidebar.title)」會在之後的版本加入。"))
+                    .glassCard()
             }
         }
+    }
+}
+
+/// Floating glass bar that appears while something is selected: size freed plus quick actions.
+private struct SelectionDock: View {
+    @Environment(AppModel.self) private var model
+    @Namespace private var glass
+
+    var body: some View {
+        let summary = model.selectionSummary
+        let selection = model.selection
+        let blocked = selection.isEmpty ? nil : model.blockReason(for: selection)
+        GlassEffectContainer(spacing: 10) {
+            if summary.count > 0 {
+                HStack(spacing: 10) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "checkmark.circle.fill").foregroundStyle(Theme.used)
+                        Text("已選 \(summary.count, format: .number) 項")
+                        Text(ByteFormat.string(summary.size))
+                            .font(.system(.body, design: .rounded).weight(.bold))
+                    }
+                    .monospacedDigit()
+                    .padding(.horizontal, 16)
+                    .frame(height: 38)
+                    .glassEffect(.regular, in: .capsule)
+                    .glassEffectID("summary", in: glass)
+
+                    Button("Finder", systemImage: "arrow.up.forward.app") { model.reveal(selection) }
+                        .buttonStyle(.glass)
+                        .glassEffectID("finder", in: glass)
+                    Button("搬移", systemImage: "folder.badge.plus") { model.requestMove(selection) }
+                        .buttonStyle(.glass)
+                        .disabled(blocked != nil || model.isPerformingAction)
+                        .glassEffectID("move", in: glass)
+                    Button("丟到垃圾桶", systemImage: "trash") { model.requestTrash(selection) }
+                        .buttonStyle(.glassProminent)
+                        .tint(.red)
+                        .disabled(blocked != nil || model.isPerformingAction)
+                        .keyboardShortcut(.delete, modifiers: .command)
+                        .help(blocked ?? "丟到垃圾桶（⌘⌫）")
+                        .glassEffectID("trash", in: glass)
+                    Button("取消選取", systemImage: "xmark") { model.selection = [] }
+                        .labelStyle(.iconOnly)
+                        .buttonStyle(.glass)
+                        .glassEffectID("clear", in: glass)
+                }
+                .controlSize(.large)
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+        }
+        .animation(.spring(duration: 0.35), value: summary.count > 0)
     }
 }

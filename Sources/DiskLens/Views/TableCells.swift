@@ -4,9 +4,14 @@ import DiskLensCore
 /// Finder icon + name.
 struct NameCell: View {
     let row: FileRow
+    /// Chart color of this item, when it appears in the sunburst.
+    var dotColor: Color? = nil
 
     var body: some View {
         HStack(spacing: 6) {
+            Circle()
+                .fill(dotColor ?? .clear)
+                .frame(width: 7, height: 7)
             Image(nsImage: IconCache.shared.icon(name: row.name, path: row.path, isDirectory: row.isDirectory))
                 .resizable()
                 .frame(width: 16, height: 16)
@@ -30,15 +35,16 @@ struct SizeCell: View {
 /// Size relative to the containing folder.
 struct SizeBarCell: View {
     let fraction: Double
+    var color: Color? = nil
 
     var body: some View {
         HStack(spacing: 6) {
             ZStack(alignment: .leading) {
-                Capsule().fill(.quaternary)
-                Capsule().fill(Color.accentColor)
-                    .frame(width: max(fraction > 0 ? 2 : 0, 70 * fraction))
+                Capsule().fill(.primary.opacity(0.08))
+                Capsule().fill(color.map { AnyShapeStyle($0.gradient) } ?? AnyShapeStyle(Theme.accentGradient))
+                    .frame(width: max(fraction > 0 ? 2 : 0, 50 * fraction))
             }
-            .frame(width: 70, height: 6)
+            .frame(width: 50, height: 6)
             Text(fraction, format: .percent.precision(.fractionLength(fraction < 0.1 ? 1 : 0)))
                 .font(.caption)
                 .monospacedDigit()
@@ -68,7 +74,8 @@ struct DateCell: View {
 
     var body: some View {
         if row.hasKnownDate {
-            Text(row.modified, format: .dateTime.year().month(.twoDigits).day(.twoDigits).hour().minute())
+            Text(row.modified, format: .dateTime.year().month(.twoDigits).day(.twoDigits))
+                .help(row.modified.formatted(date: .complete, time: .shortened))
                 .monospacedDigit()
                 .foregroundStyle(.secondary)
         } else {

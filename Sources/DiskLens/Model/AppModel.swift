@@ -58,6 +58,10 @@ final class AppModel {
         didSet { sortFolderRows() }
     }
     private(set) var folderRows: [FileRow] = []
+    /// Palette index of the biggest children of the current folder (sunburst, legend and table dots).
+    private(set) var chartColorIndex: [NodeID: Int] = [:]
+    /// Node under the pointer in the chart, legend or table; the sunburst highlights it.
+    var highlighted: NodeID?
     /// True while a huge folder is being sorted in the background.
     private(set) var isSortingFolder = false
     @ObservationIgnored private var folderSortTask: Task<Void, Never>?
@@ -284,11 +288,17 @@ final class AppModel {
 
     func rebuildFolderRows() {
         folderSortTask?.cancel()
+        highlighted = nil
         guard let tree, let currentDir else {
             folderRows = []
+            chartColorIndex = [:]
             isSortingFolder = false
             return
         }
+        // Same cut-off as the sunburst, so only items actually drawn get a color.
+        let minSize = Double(tree.size(currentDir)) * SunburstLayout.minFraction
+        let drawn = tree.children(currentDir).prefix(Theme.palette.count).prefix { Double(tree.size($0)) >= minSize && tree.size($0) > 0 }
+        chartColorIndex = Dictionary(uniqueKeysWithValues: drawn.enumerated().map { ($1, $0) })
         folderRows = FileRow.children(of: currentDir, in: tree)
         sortFolderRows()
     }

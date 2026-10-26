@@ -47,19 +47,7 @@ struct MainToolbar: ToolbarContent {
                 .keyboardShortcut(.upArrow, modifiers: .command)
                 .help("上層資料夾（⌘↑）")
         }
-        ToolbarItemGroup(placement: .primaryAction) {
-            let selection = model.selection
-            let blocked = selection.isEmpty ? nil : model.blockReason(for: selection)
-            Button("在 Finder 中顯示", systemImage: "arrow.up.forward.app") { model.reveal(selection) }
-                .disabled(selection.isEmpty)
-                .help("在 Finder 中顯示")
-            Button("搬移到…", systemImage: "folder.badge.plus") { model.requestMove(selection) }
-                .disabled(selection.isEmpty || blocked != nil || model.isPerformingAction)
-                .help(blocked ?? "搬移到其他資料夾…")
-            Button("丟到垃圾桶", systemImage: "trash") { model.requestTrash(selection) }
-                .disabled(selection.isEmpty || blocked != nil || model.isPerformingAction)
-                .keyboardShortcut(.delete, modifiers: .command)
-                .help(blocked ?? "丟到垃圾桶（⌘⌫）")
+        ToolbarItem(placement: .primaryAction) {
             Button("重新掃描", systemImage: "arrow.clockwise") { model.rescan() }
                 .disabled(model.scanRoot == nil || model.isScanning)
                 .keyboardShortcut("r", modifiers: .command)
