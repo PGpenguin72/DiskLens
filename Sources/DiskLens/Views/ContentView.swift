@@ -32,7 +32,13 @@ struct ContentView: View {
         .sheet(isPresented: $model.showingUnreadable) {
             UnreadableListSheet()
         }
-        .task { model.loadSnapshots() }
+        .task {
+            model.loadSnapshots()
+            // Debug hook for automated UI checks: start scanning this path right away.
+            if let path = ProcessInfo.processInfo.environment["DISKLENS_AUTOSCAN"], !path.isEmpty {
+                model.startScan(URL(fileURLWithPath: path))
+            }
+        }
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             model.refreshEnvironment()
         }

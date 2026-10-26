@@ -40,7 +40,13 @@ public enum LocalSnapshots {
 }
 
 public enum ByteFormat {
+    private static let formatter: ByteCountFormatter = {
+        let f = ByteCountFormatter()
+        f.countStyle = .file
+        return f
+    }()
+
     public static func string(_ bytes: Int64) -> String {
-        ByteCountFormatter.string(fromByteCount: bytes, countStyle: .file)
+        bytes == 0 ? "0 KB" : formatter.string(fromByteCount: bytes)
     }
 }

@@ -14,7 +14,7 @@ struct FullDiskAccessBanner: View {
                 Text("沒有這個權限時，郵件、訊息、Safari 和部分 App 的資料夾無法讀取，掃描結果會少算空間。請到「系統設定 › 隱私權與安全性 › 完整磁碟取用權限」開啟 DiskLens，然後重新掃描。")
                     .font(.callout)
                     .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(3)
                 if model.unreadableCount > 0 {
                     Button("這次掃描有 \(model.unreadableCount) 個資料夾無法讀取，查看清單") {
                         model.showingUnreadable = true
@@ -23,7 +23,7 @@ struct FullDiskAccessBanner: View {
                     .font(.callout)
                 }
             }
-            Spacer(minLength: 8)
+            .frame(maxWidth: .infinity, alignment: .leading)
             Button("開啟系統設定") { FullDiskAccess.openSettings() }
             Button("隱藏", systemImage: "xmark") { model.fullDiskAccessBannerDismissed = true }
                 .labelStyle(.iconOnly)

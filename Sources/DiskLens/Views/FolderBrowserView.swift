@@ -1,13 +1,18 @@
 import SwiftUI
 import DiskLensCore
 
-/// Breadcrumb + table of the current folder's children.
+/// Breadcrumb, ring chart and table of the current folder's children.
 struct FolderBrowserView: View {
     var body: some View {
         VStack(spacing: 0) {
             BreadcrumbBar()
             Divider()
-            FolderTable()
+            HStack(spacing: 0) {
+                SunburstView()
+                    .frame(width: 300)
+                Divider()
+                FolderTable()
+            }
         }
     }
 }
@@ -73,15 +78,15 @@ private struct FolderTable: View {
         @Bindable var model = model
         Table(model.folderRows, selection: $model.selection, sortOrder: $model.folderSort) {
             TableColumn("名稱", value: \.name) { NameCell(row: $0) }
-                .width(min: 180, ideal: 340)
+                .width(min: 120, ideal: 180)
             TableColumn("大小", value: \.size) { SizeCell(size: $0.size) }
-                .width(min: 70, ideal: 90, max: 130)
+                .width(min: 70, ideal: 85, max: 130)
             TableColumn("比例") { SizeBarCell(fraction: $0.fraction) }
-                .width(min: 90, ideal: 120, max: 160)
+                .width(min: 100, ideal: 115, max: 160)
             TableColumn("項目數", value: \.fileCount) { CountCell(row: $0) }
-                .width(min: 60, ideal: 80, max: 120)
+                .width(min: 60, ideal: 75, max: 120)
             TableColumn("修改日期", value: \.modified) { DateCell(row: $0) }
-                .width(min: 110, ideal: 150, max: 200)
+                .width(min: 110, ideal: 130, max: 200)
         }
         .contextMenu(forSelectionType: NodeID.self) { ids in
             FileContextMenu(ids: ids)
