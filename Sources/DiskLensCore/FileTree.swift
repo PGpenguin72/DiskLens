@@ -21,6 +21,7 @@ public final class FileTree: @unchecked Sendable {
     var isDir: [Bool] = []
     var childLists: [[Int32]] = []   // empty for files
     var removed: [Bool] = []
+    var dataless: Set<Int32> = []    // cloud placeholders whose contents are not on disk
 
     public let rootPath: String
     public private(set) var scanDate = Date()
@@ -42,6 +43,8 @@ public final class FileTree: @unchecked Sendable {
     public func fileCount(_ id: NodeID) -> Int { Int(fileCounts[Int(id.raw)]) }
     public func modified(_ id: NodeID) -> Date { Date(timeIntervalSince1970: mtimes[Int(id.raw)]) }
     public func isRemoved(_ id: NodeID) -> Bool { removed[Int(id.raw)] }
+    /// True for "dataless" cloud placeholders (e.g. iCloud Drive files evicted from the Mac).
+    public func isDataless(_ id: NodeID) -> Bool { dataless.contains(id.raw) }
 
     public func parent(_ id: NodeID) -> NodeID? {
         let p = parents[Int(id.raw)]
@@ -145,6 +148,8 @@ public final class FileTreeBuilder: @unchecked Sendable {
         public var isDirectory: Bool
         public var allocatedSize: Int64   // ignored for directories
         public var modified: Double       // seconds since 1970
+        /// Cloud placeholder whose contents are not stored locally.
+        public var isDataless = false
         public init(name: String, isDirectory: Bool, allocatedSize: Int64, modified: Double) {
             self.name = name; self.isDirectory = isDirectory
             self.allocatedSize = allocatedSize; self.modified = modified
@@ -161,11 +166,14 @@ public final class FileTreeBuilder: @unchecked Sendable {
             let id = appendLocked(name: e.name, parent: parent.raw,
                                   size: e.isDirectory ? 0 : e.allocatedSize,
                                   mtime: e.modified, isDir: e.isDirectory)
+            if e.isDataless { tree.dataless.insert(id.raw) }
             ids.append(id)
         }
         tree.childLists[Int(parent.raw)].append(contentsOf: ids.map(\.raw))
         return ids
     }
+
+    var rootPath: String { tree.rootPath }
 
     public func markUnreadable(_ path: String) {
         lock.lock(); tree.unreadable.append(path); lock.unlock()
