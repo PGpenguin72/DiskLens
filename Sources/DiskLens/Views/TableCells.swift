@@ -6,9 +6,20 @@ struct NameCell: View {
     let row: FileRow
     /// Chart color of this item, when it appears in the sunburst.
     var dotColor: Color? = nil
+    /// Multi-select mode: whether the row is checked (`nil` hides the check circle).
+    var checked: Bool? = nil
+    var onToggle: () -> Void = {}
 
+    // Table cells are hosted separately, so everything comes in as plain values — no @Environment here.
     var body: some View {
         HStack(spacing: 6) {
+            if let checked {
+                Image(systemName: checked ? "checkmark.circle.fill" : "circle")
+                    .font(.system(size: 15))
+                    .foregroundStyle(checked ? AnyShapeStyle(Theme.used) : AnyShapeStyle(.tertiary))
+                    .contentShape(.rect)
+                    .onTapGesture(perform: onToggle)
+            }
             Circle()
                 .fill(dotColor ?? .clear)
                 .frame(width: 7, height: 7)

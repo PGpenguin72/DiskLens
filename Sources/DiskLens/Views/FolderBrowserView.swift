@@ -123,9 +123,11 @@ private struct FolderTable: View {
 
     var body: some View {
         @Bindable var model = model
-        Table(model.folderRows, selection: $model.selection, sortOrder: $model.folderSort) {
+        Table(model.folderRows, selection: model.tableSelection, sortOrder: $model.folderSort) {
             TableColumn("名稱", value: \.name) { row in
-                NameCell(row: row, dotColor: model.chartColorIndex[row.id].map(Theme.color))
+                NameCell(row: row, dotColor: model.chartColorIndex[row.id].map(Theme.color),
+                         checked: model.multiSelectMode ? model.selection.contains(row.id) : nil,
+                         onToggle: { model.toggleSelection(row.id) })
                     .onHover { inside in
                         if inside { model.highlighted = row.id } else if model.highlighted == row.id { model.highlighted = nil }
                     }

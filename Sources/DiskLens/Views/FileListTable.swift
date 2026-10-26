@@ -9,8 +9,11 @@ struct FileListTable: View {
 
     var body: some View {
         @Bindable var model = model
-        Table(rows, selection: $model.selection, sortOrder: $sortOrder) {
-            TableColumn("名稱", value: \.name) { NameCell(row: $0) }
+        Table(rows, selection: model.tableSelection, sortOrder: $sortOrder) {
+            TableColumn("名稱", value: \.name) { row in
+                NameCell(row: row, checked: model.multiSelectMode ? model.selection.contains(row.id) : nil,
+                         onToggle: { model.toggleSelection(row.id) })
+            }
                 .width(min: 160, ideal: 280)
             TableColumn("大小", value: \.size) { SizeCell(size: $0.size) }
                 .width(85)

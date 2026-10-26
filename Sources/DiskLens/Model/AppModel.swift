@@ -1,3 +1,4 @@
+import SwiftUI
 import AppKit
 import Observation
 import os
@@ -44,6 +45,27 @@ final class AppModel {
     private var backStack: [NodeID] = []
     private var forwardStack: [NodeID] = []
     var selection: Set<NodeID> = []
+    /// When on, a plain click adds or removes a row instead of replacing the selection (no ⌘ needed).
+    var multiSelectMode = false
+
+    /// Selection binding for tables; applies multi-select mode on top of the table's own behaviour.
+    var tableSelection: Binding<Set<NodeID>> {
+        Binding(get: { self.selection }, set: { self.applyTableSelection($0) })
+    }
+
+    private func applyTableSelection(_ new: Set<NodeID>) {
+        guard multiSelectMode else { selection = new; return }
+        // A plain click reports just the clicked row: toggle it. Shift/⌘/drag/⌘A report several: take them.
+        if new.count == 1, let id = new.first {
+            if selection.contains(id) { selection.remove(id) } else { selection.insert(id) }
+        } else if !new.isEmpty {
+            selection = new
+        }
+    }
+
+    func toggleSelection(_ id: NodeID) {
+        if selection.contains(id) { selection.remove(id) } else { selection.insert(id) }
+    }
 
     var canGoBack: Bool { !backStack.isEmpty }
     var canGoForward: Bool { !forwardStack.isEmpty }

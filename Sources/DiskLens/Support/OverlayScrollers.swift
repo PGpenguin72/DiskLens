@@ -1,34 +1,35 @@
 import AppKit
+import ObjectiveC
 import SwiftUI
 
-extension View {
-    /// Gives the tables in this window thin, auto-hiding overlay scrollers without a track, even when
-    /// System Settings says "Always show scroll bars" — the legacy scroller breaks the glass look.
-    func overlayScrollers() -> some View {
-        background(OverlayScrollerInstaller())
+/// Makes every scroll view in the app use thin, auto-hiding overlay scrollers, even when System Settings
+/// says "Always show scroll bars" — the legacy scroller with its track breaks the glass cards.
+enum OverlayScrollerStyle {
+    /// Call once before any window is created. Scroll views read `NSScroller.preferredScrollerStyle`
+    /// whenever they are built or the system preference changes, so overriding it covers every
+    /// table SwiftUI rebuilds later.
+    static func install() {
+        guard let method = class_getClassMethod(NSScroller.self, #selector(getter: NSScroller.preferredScrollerStyle)) else { return }
+        let overlay: @convention(block) (AnyObject) -> NSScroller.Style = { _ in .overlay }
+        method_setImplementation(method, imp_implementationWithBlock(overlay))
     }
 }
 
-private struct OverlayScrollerInstaller: NSViewRepresentable {
-    func makeNSView(context: Context) -> InstallerView { InstallerView() }
-    func updateNSView(_ view: InstallerView, context: Context) { view.scheduleApply() }
+extension View {
+    /// Removes the table's horizontal scroller and header corner filler (a dark square next to the header).
+    func overlayScrollers() -> some View {
+        background(TableChromeCleaner())
+    }
+}
 
-    final class InstallerView: NSView {
-        private var observer: NSObjectProtocol?
+private struct TableChromeCleaner: NSViewRepresentable {
+    func makeNSView(context: Context) -> CleanerView { CleanerView() }
+    func updateNSView(_ view: CleanerView, context: Context) { view.scheduleApply() }
 
+    final class CleanerView: NSView {
         override func viewDidMoveToWindow() {
             super.viewDidMoveToWindow()
             scheduleApply()
-            if observer == nil {
-                // AppKit resets the style when the system preference changes.
-                observer = NotificationCenter.default.addObserver(
-                    forName: NSScroller.preferredScrollerStyleDidChangeNotification, object: nil, queue: .main
-                ) { [weak self] _ in self?.scheduleApply() }
-            }
-        }
-
-        deinit {
-            if let observer { NotificationCenter.default.removeObserver(observer) }
         }
 
         /// SwiftUI builds the table's scroll view lazily, so apply on the next run loop turns.
@@ -41,10 +42,7 @@ private struct OverlayScrollerInstaller: NSViewRepresentable {
         private func apply() {
             guard let root = window?.contentView else { return }
             for scrollView in Self.tableScrollViews(in: root) {
-                if scrollView.scrollerStyle != .overlay { scrollView.scrollerStyle = .overlay }
-                scrollView.autohidesScrollers = true
                 if scrollView.hasHorizontalScroller { scrollView.hasHorizontalScroller = false }
-                // The header's corner filler shows as a dark square above the (now overlay) scroller.
                 if let table = scrollView.documentView as? NSTableView, table.cornerView != nil { table.cornerView = nil }
             }
         }

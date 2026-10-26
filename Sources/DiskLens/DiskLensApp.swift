@@ -7,6 +7,7 @@ enum DiskLensMain {
         if let folder = ProcessInfo.processInfo.environment["DISKLENS_SELFTEST"], !folder.isEmpty {
             SelfTest.run(folder: folder)
         }
+        OverlayScrollerStyle.install()
         DiskLensApp.main()
     }
 }
