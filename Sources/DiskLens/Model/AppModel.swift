@@ -139,6 +139,8 @@ final class AppModel {
     var pendingTrash: TrashRequest?
     var errorMessage: String?
     var showingUnreadable = false
+    /// First-launch tour (also 說明 › 新手導覽).
+    var showingOnboarding = false
     var isPerformingAction = false
 
     // MARK: AI

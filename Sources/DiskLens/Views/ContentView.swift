@@ -34,10 +34,18 @@ struct ContentView: View {
         .frame(minWidth: 980, minHeight: 620)
         .modifier(ActionAlerts())
         .modifier(AIPresentation())
+        .sheet(isPresented: $model.showingOnboarding) {
+            OnboardingView()
+        }
         .sheet(isPresented: $model.showingUnreadable) {
             UnreadableListSheet()
         }
         .task {
+            let env = ProcessInfo.processInfo.environment
+            if env["DISKLENS_DEMO_ONBOARDING"] != nil
+                || (!UserDefaults.standard.bool(forKey: OnboardingView.seenKey) && env["DISKLENS_AUTOSCAN"] == nil) {
+                model.showingOnboarding = true
+            }
             model.loadSnapshots()
             // Debug hook: open a sidebar view on launch (apps, fileTypes, cleanup, largeFiles).
             if let name = ProcessInfo.processInfo.environment["DISKLENS_SIDEBAR"],

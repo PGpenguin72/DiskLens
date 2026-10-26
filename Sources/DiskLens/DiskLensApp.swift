@@ -32,6 +32,14 @@ struct DiskLensApp: App {
                 Button("選擇資料夾並掃描…") { model.chooseFolderAndScan() }
                     .keyboardShortcut("o")
             }
+            CommandGroup(replacing: .help) {
+                Button("新手導覽") { model.showingOnboarding = true }
+                Divider()
+                Link("隱私權政策", destination: AppLinks.privacy)
+                Link("使用條款", destination: AppLinks.terms)
+                Link("在 GitHub 上查看原始碼", destination: AppLinks.repository)
+                Link("回報問題", destination: AppLinks.issues)
+            }
         }
 
         Settings {
@@ -49,4 +57,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
+}
+
+/// Public pages for the Help menu and Settings.
+enum AppLinks {
+    static let repository = URL(string: "https://github.com/PGpenguin72/DiskLens")!
+    static let issues = URL(string: "https://github.com/PGpenguin72/DiskLens/issues")!
+    static let privacy = URL(string: "https://github.com/PGpenguin72/DiskLens/blob/main/docs/PRIVACY.md")!
+    static let terms = URL(string: "https://github.com/PGpenguin72/DiskLens/blob/main/docs/TERMS.md")!
 }
