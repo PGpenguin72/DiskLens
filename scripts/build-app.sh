@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT="$(pwd)"
 APP="$ROOT/dist/DiskLens.app"
-VERSION="0.1.0"
+VERSION="0.2.0"
 
 echo "==> Building release binary"
 swift build -c release --product DiskLens --arch arm64 --arch x86_64
