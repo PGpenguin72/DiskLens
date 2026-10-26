@@ -4,6 +4,7 @@ import DiskLensCore
 /// Main window: glass sidebar, ambient background, the active view and a floating selection bar.
 struct ContentView: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.openSettings) private var openSettings
 
     var body: some View {
         @Bindable var model = model
@@ -32,6 +33,7 @@ struct ContentView: View {
         .navigationTitle(model.hasTree ? model.scanRootDisplayName : "DiskLens")
         .frame(minWidth: 980, minHeight: 620)
         .modifier(ActionAlerts())
+        .modifier(AIPresentation())
         .sheet(isPresented: $model.showingUnreadable) {
             UnreadableListSheet()
         }
@@ -44,6 +46,10 @@ struct ContentView: View {
                 if let open = ProcessInfo.processInfo.environment["DISKLENS_AUTOOPEN"] {
                     while !model.hasTree { try? await Task.sleep(for: .milliseconds(200)) }
                     if let id = model.tree?.node(atPath: open) { model.open(id) }
+                }
+                if ProcessInfo.processInfo.environment["DISKLENS_DEMO_AI"] != nil {
+                    while !model.hasTree { try? await Task.sleep(for: .milliseconds(200)) }
+                    await AIDemo.run(model) { openSettings() }
                 }
                 if ProcessInfo.processInfo.environment["DISKLENS_DEMO_MULTISELECT"] != nil {
                     while !model.hasTree { try? await Task.sleep(for: .milliseconds(200)) }
@@ -116,6 +122,10 @@ private struct SelectionDock: View {
                         .glassEffect(.regular, in: .capsule)
                         .glassEffectID("summary", in: glass)
 
+                        Button("問 AI", systemImage: "sparkles") { model.askAI(selection) }
+                            .buttonStyle(.glass)
+                            .help("問 AI：這是什麼？能刪嗎？")
+                            .glassEffectID("ai", in: glass)
                         Button("Finder", systemImage: "arrow.up.forward.app") { model.reveal(selection) }
                             .buttonStyle(.glass)
                             .glassEffectID("finder", in: glass)

@@ -136,6 +136,11 @@ final class AppModel {
     var showingUnreadable = false
     var isPerformingAction = false
 
+    // MARK: AI
+
+    /// AI explanations (settings, consent, requests). Observable on its own.
+    @ObservationIgnored let ai = AIAssistant()
+
     init() {
         refreshEnvironment()
     }

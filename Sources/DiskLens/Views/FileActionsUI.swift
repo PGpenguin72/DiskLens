@@ -14,6 +14,7 @@ struct FileContextMenu: View {
                 Button("在資料夾瀏覽器中顯示") { model.showInBrowser(id) }
             }
             Button("拷貝路徑") { model.copyPaths(ids) }
+            Button("問 AI：這是什麼？", systemImage: "sparkles") { model.askAI(ids) }
             Divider()
             if let reason = model.blockReason(for: ids) {
                 Button("搬移到…") {}.disabled(true)

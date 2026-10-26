@@ -7,6 +7,9 @@ enum DiskLensMain {
         if let folder = ProcessInfo.processInfo.environment["DISKLENS_SELFTEST"], !folder.isEmpty {
             SelfTest.run(folder: folder)
         }
+        if let path = ProcessInfo.processInfo.environment["DISKLENS_AI_SELFTEST"], !path.isEmpty {
+            AISelfTest.run(path: path)
+        }
         OverlayScrollerStyle.install()
         DiskLensApp.main()
     }
@@ -29,6 +32,11 @@ struct DiskLensApp: App {
                 Button("選擇資料夾並掃描…") { model.chooseFolderAndScan() }
                     .keyboardShortcut("o")
             }
+        }
+
+        Settings {
+            SettingsView()
+                .environment(model)
         }
     }
 }
