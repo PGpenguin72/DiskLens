@@ -24,39 +24,30 @@ public struct ScanOptions: Sendable {
 }
 
 public final class Scanner: Sendable {
-    public init() {}
+    /// Number of worker threads reading directories in parallel.
+    public let threadCount: Int
+
+    public convenience init() {
+        self.init(threadCount: ProcessInfo.processInfo.activeProcessorCount)
+    }
+
+    public init(threadCount: Int) {
+        self.threadCount = max(1, threadCount)
+    }
 
     /// Scans `root` and returns the finished tree.
     /// `progress` is called from background threads, at most ~10 times per second.
     /// Throws `CancellationError` if the surrounding Task is cancelled.
     public func scan(root: URL, options: ScanOptions = ScanOptions(),
                      progress: @escaping @Sendable (ScanProgress) -> Void) async throws -> FileTree {
-        // PLACEHOLDER: simple single-threaded FileManager walk. Replaced by the fast engine.
-        let builder = FileTreeBuilder(rootPath: root.path)
-        var stack: [(URL, NodeID)] = [(root, NodeID(0))]
-        var count = 0
-        let keys: [URLResourceKey] = [.isDirectoryKey, .isSymbolicLinkKey, .totalFileAllocatedSizeKey, .contentModificationDateKey]
-        while let (url, id) = stack.popLast() {
-            try Task.checkCancellation()
-            if options.excludedPaths.contains(url.path) { continue }
-            guard let items = try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: keys) else {
-                builder.markUnreadable(url.path); continue
-            }
-            var entries: [FileTreeBuilder.Entry] = []
-            var urls: [URL] = []
-            for item in items {
-                let v = try? item.resourceValues(forKeys: Set(keys))
-                let dir = (v?.isDirectory ?? false) && !(v?.isSymbolicLink ?? false)
-                entries.append(.init(name: item.lastPathComponent, isDirectory: dir,
-                                     allocatedSize: Int64(v?.totalFileAllocatedSize ?? 0),
-                                     modified: v?.contentModificationDate?.timeIntervalSince1970 ?? 0))
-                urls.append(item)
-            }
-            let ids = builder.addChildren(of: id, entries)
-            for (i, e) in entries.enumerated() where e.isDirectory { stack.append((urls[i], ids[i])) }
-            count += entries.count
-            if count % 2000 < entries.count { progress(ScanProgress(itemsScanned: count, bytesScanned: 0, currentPath: url.path)) }
+        try Task.checkCancellation()
+        let engine = ScanEngine(root: root.path, options: options, threadCount: threadCount, progress: progress)
+        let tree = await withTaskCancellationHandler {
+            await engine.run()
+        } onCancel: {
+            engine.cancel()
         }
-        return builder.finish()
+        guard let tree else { throw CancellationError() }
+        return tree
     }
 }
