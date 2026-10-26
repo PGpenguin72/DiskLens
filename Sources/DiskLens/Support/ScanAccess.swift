@@ -10,6 +10,8 @@ enum ScanAccess {
     /// Returns the URL to scan for `root`, asking the user to grant it if needed; `nil` if they cancel.
     static func prepare(_ root: URL) -> URL? {
         #if APP_STORE
+        // Headless self-test: no panel can be answered, so scan with whatever the sandbox allows.
+        if ProcessInfo.processInfo.environment["DISKLENS_SELFTEST"] != nil { return root }
         if let granted = resolveBookmark(covering: root) { return granted }
         guard let picked = askForAccess(suggesting: root) else { return nil }
         remember(picked)
