@@ -89,6 +89,8 @@ public final class FileTree: @unchecked Sendable {
 
     /// Largest regular files in the whole tree, biggest first.
     public func largestFiles(limit: Int = 500, minSize: Int64 = 0) -> [NodeID] {
+        // Local snapshots: a concurrent `remove` on the main thread then copies instead of racing.
+        let names = self.names, isDir = self.isDir, removed = self.removed, sizes = self.sizes
         var heap: [(Int64, Int32)] = []
         heap.reserveCapacity(limit + 1)
         var floor: Int64 = minSize
@@ -107,12 +109,54 @@ public final class FileTree: @unchecked Sendable {
     /// Nodes whose name contains `query` (case-insensitive), biggest first.
     public func search(_ query: String, limit: Int = 1000) -> [NodeID] {
         guard !query.isEmpty else { return [] }
-        var hits: [Int32] = []
-        for i in 0..<names.count where !removed[i] {
-            if names[i].localizedCaseInsensitiveContains(query) { hits.append(Int32(i)) }
+        let names = self.names, removed = self.removed, sizes = self.sizes
+        // Split the name array into chunks matched in parallel; 4M+ names is too slow on one core.
+        let count = names.count
+        let chunks = max(1, min(64, count / 20_000))
+        let chunkSize = (count + chunks - 1) / chunks
+        // ASCII queries take a byte-level fast path; anything else goes through Foundation.
+        let needle: [UInt8]? = query.utf8.allSatisfy { $0 < 0x80 } ? query.utf8.map(Self.asciiLower) : nil
+        var partial = [[Int32]](repeating: [], count: chunks)
+        partial.withUnsafeMutableBufferPointer { out in
+            DispatchQueue.concurrentPerform(iterations: chunks) { c in
+                let lo = c * chunkSize, hi = min(count, lo + chunkSize)
+                guard lo < hi else { return }
+                var local: [Int32] = []
+                for i in lo..<hi where !removed[i] {
+                    let match: Bool
+                    if let needle {
+                        var name = names[i]
+                        match = name.withUTF8 { Self.containsASCII($0, needle) }
+                    } else {
+                        match = names[i].range(of: query, options: [.caseInsensitive, .diacriticInsensitive]) != nil
+                    }
+                    if match { local.append(Int32(i)) }
+                }
+                out[c] = local
+            }
         }
+        var hits = partial.flatMap { $0 }
         hits.sort { sizes[Int($0)] > sizes[Int($1)] }
         return hits.prefix(limit).map { NodeID($0) }
+    }
+
+    private static func asciiLower(_ b: UInt8) -> UInt8 { b >= 65 && b <= 90 ? b | 0x20 : b }
+
+    /// Case-insensitive substring test of an ASCII `needle` (already lowercased) in UTF-8 `hay`.
+    private static func containsASCII(_ hay: UnsafeBufferPointer<UInt8>, _ needle: [UInt8]) -> Bool {
+        let n = needle.count
+        guard n <= hay.count else { return false }
+        let first = needle[0]
+        var i = 0
+        while i <= hay.count - n {
+            if asciiLower(hay[i]) == first {
+                var j = 1
+                while j < n && asciiLower(hay[i + j]) == needle[j] { j += 1 }
+                if j == n { return true }
+            }
+            i += 1
+        }
+        return false
     }
 
     // MARK: Mutation

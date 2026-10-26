@@ -35,9 +35,11 @@ enum SelfTest {
             print("  \(pad(ByteFormat.string(row.size)))  \(row.path)")
         }
 
+        let searchStart = Date()
         model.searchText = String(model.largeRows.first?.name.prefix(4) ?? "")
         spin { model.isSearching }
-        print("\nSearch \"\(model.searchText)\": \(model.searchRows.count) hits")
+        print(String(format: "\nSearch \"%@\": %d hits in %.2f s (incl. debounce)", model.searchText,
+                     model.searchRows.count, Date().timeIntervalSince(searchStart)))
 
         model.searchText = ""
         spin { model.isSearching }
