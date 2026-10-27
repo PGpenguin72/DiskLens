@@ -14,7 +14,7 @@ This guide takes Ringwise from "developer account ready" to "submitted for revie
 | Category | Utilities (secondary: Productivity) |
 | Price | Free |
 | Xcode project | generate with `xcodegen generate`; scheme **Ringwise-AppStore** (sandboxed, `APP_STORE` flag) |
-| Version / build | `MARKETING_VERSION` 0.2.0; `CURRENT_PROJECT_VERSION` must increase on every upload |
+| Version / build | `MARKETING_VERSION` 1.0.0; `CURRENT_PROJECT_VERSION` must increase on every upload |
 | Support URL | https://github.com/PGpenguin72/Ringwise/issues |
 | Marketing URL | https://github.com/PGpenguin72/Ringwise |
 | Privacy policy URL | https://github.com/PGpenguin72/Ringwise/blob/main/docs/PRIVACY.md |
@@ -79,7 +79,8 @@ Use the exact text in [`docs/APP_STORE.md`](APP_STORE.md) under "App Store 頁�
 3. **App Privacy**:
    - Privacy Policy URL: see Facts.
    - Data collection: **"No, we do not collect data from this app."** (Ringwise has no analytics or networking. The App Store build's AI uses Apple's on-device model only. Feedback emails are sent by the user from their own mail app and aren't collected by the app.) 🧑 Confirm with the owner before publishing the answers.
-4. **macOS app → version 0.2.0** page:
+4. **macOS app → version 1.0.0** page:
+   - The version number must be **1.0.0**. If the page was already created as 0.2.0 (or any other number), click the version number in App Store Connect and change it to 1.0.0 before uploading the build.
    - Promotional text, description and keywords from `APP_STORE.md` (per language).
    - Support URL and Marketing URL: see Facts.
    - Copyright: `2026 PGpenguin72`
@@ -129,7 +130,7 @@ Do **not** commit the Team ID change unless the owner wants it public. A Team ID
 
 ## Step 7: Submit (only when the owner says so)
 
-1. App Store Connect → the app → macOS version 0.2.0 → **Build** → select the uploaded build.
+1. App Store Connect → the app → macOS version 1.0.0 → **Build** → select the uploaded build.
 2. Check that every required field shows no warnings.
 3. 🧑 When the owner says "submit": **Add for Review** → **Submit to App Review**.
 4. Review usually takes 1–3 days. If Apple sends questions or a rejection, copy the full message to the owner (and to Claude/Codex in the repo) instead of replying on your own.

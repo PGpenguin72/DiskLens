@@ -5,7 +5,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 ROOT="$(pwd)"
 APP="$ROOT/dist/Ringwise.app"
-VERSION="0.2.0"
+VERSION="1.0.0"
 # Build number: commit count, so every build from a newer commit is higher.
 BUILD="$(git rev-list --count HEAD 2>/dev/null || echo 1)"
 
