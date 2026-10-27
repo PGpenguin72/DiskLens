@@ -50,7 +50,8 @@ private struct RuleList: View {
     var body: some View {
         let store = model.analysis
         ScrollView {
-            LazyVStack(spacing: 4) {
+            // A plain VStack: ~20 cards, and a lazy stack re-measuring them made the list jump on every click.
+            VStack(spacing: 4) {
                 ForEach(rules) { match in
                     let selected = store.selectedRule == match.rule
                     Button {
@@ -100,8 +101,7 @@ private struct RuleCard: View {
                 Text(match.rule.summary)
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                    .lineLimit(2)
-                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(2, reservesSpace: true)
             }
         }
         .padding(12)
@@ -141,10 +141,12 @@ private struct RuleDetail: View {
                         .monospacedDigit()
                 }
                 CleanupSafetyBadge(safety: match.rule.safety)
+                // Fixed two-line height so the table below doesn't move when switching rules.
                 Text(match.rule.summary)
                     .font(.callout)
                     .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(2, reservesSpace: true)
+                    .help(match.rule.summary)
                 HStack(spacing: 8) {
                     if match.rule.isActionable {
                         Button("全選這一類", systemImage: "checklist") { model.selection = Set(match.items) }
