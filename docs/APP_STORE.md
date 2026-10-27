@@ -2,6 +2,8 @@
 
 這份文件整理了把 DiskLens 送上 Mac App Store 需要的所有步驟和文字。標 🧑 的步驟必須用你自己的 Apple 開發者帳號操作。
 
+> 要交給 AI agent（例如 Codex）代為操作瀏覽器和 Xcode，請給它 [`APP_STORE_SUBMISSION_GUIDE.md`](APP_STORE_SUBMISSION_GUIDE.md)。
+
 ## 已經準備好的部分
 
 | 項目 | 位置 |
