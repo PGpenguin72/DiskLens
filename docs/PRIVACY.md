@@ -19,7 +19,7 @@ With Full Disk Access granted, DiskLens can read metadata in folders macOS other
 Everything stays on your Mac:
 
 - Scan results live in memory while the app is open.
-- Settings (for example your AI provider choice and the date you gave consent) are stored in the app's preferences (`~/Library/Preferences/tw.ncse.disklens.plist`).
+- Settings (for example your AI provider choice and the date you gave consent) are stored in the app's preferences (`~/Library/Preferences/tw.pg72.disklens.plist`).
 - If you use the AI feature, its answers are cached in `~/Library/Application Support/DiskLens/` so the same question isn't asked twice. You can clear this cache in Settings.
 
 ## What DiskLens sends

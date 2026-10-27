@@ -19,7 +19,7 @@ DiskLens 是一个完全在你的 Mac 上运行的磁盘空间分析工具。本
 所有东西都留在你的 Mac 上：
 
 - 扫描结果只在 App 打开时存在内存中。
-- 设置（例如你选的 AI 工具、同意使用的日期）存在 App 的偏好设置文件（`~/Library/Preferences/tw.ncse.disklens.plist`）。
+- 设置（例如你选的 AI 工具、同意使用的日期）存在 App 的偏好设置文件（`~/Library/Preferences/tw.pg72.disklens.plist`）。
 - 如果你用了 AI 功能，回答会缓存在 `~/Library/Application Support/DiskLens/`，同样的问题就不必再问一次。这份缓存可以在“设置”里清除。
 
 ## DiskLens 会发送什么

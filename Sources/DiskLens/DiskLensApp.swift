@@ -45,6 +45,24 @@ struct DiskLensApp: App {
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        Self.migrateLegacyPreferences()
+    }
+
+    /// Builds before 0.2 used the bundle ID `tw.ncse.disklens`; carry their settings over once.
+    private static func migrateLegacyPreferences() {
+        #if !APP_STORE
+        let defaults = UserDefaults.standard
+        guard Bundle.main.bundleIdentifier == "tw.pg72.disklens",
+              !defaults.bool(forKey: "migratedLegacyPreferences"),
+              let legacy = defaults.persistentDomain(forName: "tw.ncse.disklens") else { return }
+        for (key, value) in legacy where defaults.object(forKey: key) == nil && !key.hasPrefix("NS") {
+            defaults.set(value, forKey: key)
+        }
+        defaults.set(true, forKey: "migratedLegacyPreferences")
+        #endif
+    }
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Also makes the raw binary (outside the .app bundle) behave like a regular app.
         NSApp.setActivationPolicy(.regular)

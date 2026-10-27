@@ -25,7 +25,7 @@
    open DiskLens.xcodeproj
    ```
 4. 🧑 **設定簽章**：選 target `DiskLens-AppStore` › Signing & Capabilities › Team 選你的團隊。Xcode 會自動產生憑證和描述檔。（也可以把 Team ID 填到 `project.yml` 的 `DEVELOPMENT_TEAM`，之後重新產生專案就不用每次手動選。）
-5. 🧑 **確認 Bundle ID**：預設是 `tw.ncse.disklens`。如果你想用自己的網域，改 `project.yml` 的 `PRODUCT_BUNDLE_IDENTIFIER`。Bundle ID 一旦用在上架的 App 上就不能再改。
+5. 🧑 **確認 Bundle ID**：預設是 `tw.pg72.disklens`。如果你想用自己的網域，改 `project.yml` 的 `PRODUCT_BUNDLE_IDENTIFIER`。Bundle ID 一旦用在上架的 App 上就不能再改。
 6. 🧑 **在 App Store Connect 建立 App**（<https://appstoreconnect.apple.com> › 我的 App › ＋）：
    - 平台：macOS
    - 名稱：`DiskLens`（若已被使用，可改用「DiskLens – 磁碟空間分析」之類的名稱）
