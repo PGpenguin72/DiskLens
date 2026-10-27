@@ -1,8 +1,8 @@
-// Renders a simple DiskLens app icon into an .iconset folder.
+// Renders a simple Ringwise app icon into an .iconset folder.
 // Usage: swift scripts/make-icon.swift <output.iconset>
 import AppKit
 
-let output = URL(fileURLWithPath: CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : "DiskLens.iconset")
+let output = URL(fileURLWithPath: CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : "Ringwise.iconset")
 try? FileManager.default.createDirectory(at: output, withIntermediateDirectories: true)
 
 func render(_ pixels: Int) -> Data {

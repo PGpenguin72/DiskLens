@@ -1,6 +1,6 @@
 # XcodeGen spec for the signed builds. Generate the project with:  xcodegen generate
-# (DiskLens.xcodeproj is generated, not committed.) Day-to-day development can keep using SwiftPM.
-name: DiskLens
+# (Ringwise.xcodeproj is generated, not committed.) Day-to-day development can keep using SwiftPM.
+name: Ringwise
 options:
   deploymentTarget:
     macOS: "26.0"
@@ -10,7 +10,7 @@ options:
   createIntermediateGroups: true
 
 packages:
-  DiskLensKit:
+  RingwiseKit:
     path: .
 
 settings:
@@ -24,53 +24,53 @@ settings:
     ENABLE_HARDENED_RUNTIME: YES
     ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
     INFOPLIST_FILE: Packaging/Info.plist
-    PRODUCT_NAME: DiskLens
-    PRODUCT_BUNDLE_IDENTIFIER: tw.pg72.disklens
+    PRODUCT_NAME: Ringwise
+    PRODUCT_BUNDLE_IDENTIFIER: tw.pg72.ringwise
     SWIFT_EMIT_LOC_STRINGS: YES
     LOCALIZATION_PREFERS_STRING_CATALOGS: YES
 
 targetTemplates:
-  DiskLensApp:
+  RingwiseApp:
     type: application
     platform: macOS
     sources:
-      - path: Sources/DiskLens
+      - path: Sources/Ringwise
       - path: Packaging/Assets.xcassets
       - path: Packaging/PrivacyInfo.xcprivacy
         buildPhase: resources
     dependencies:
-      - package: DiskLensKit
-        product: DiskLensCore
+      - package: RingwiseKit
+        product: RingwiseCore
 
 targets:
   # Direct download (Developer ID + notarization). Not sandboxed: can launch local AI CLIs.
-  DiskLens:
-    templates: [DiskLensApp]
+  Ringwise:
+    templates: [RingwiseApp]
     settings:
       base:
-        CODE_SIGN_ENTITLEMENTS: Packaging/DiskLens.entitlements
+        CODE_SIGN_ENTITLEMENTS: Packaging/Ringwise.entitlements
 
   # Mac App Store. Sandboxed; AI uses Apple's on-device model only (APP_STORE compiles out the CLIs).
-  DiskLens-AppStore:
-    templates: [DiskLensApp]
+  Ringwise-AppStore:
+    templates: [RingwiseApp]
     settings:
       base:
-        CODE_SIGN_ENTITLEMENTS: Packaging/DiskLensAppStore.entitlements
+        CODE_SIGN_ENTITLEMENTS: Packaging/RingwiseAppStore.entitlements
         SWIFT_ACTIVE_COMPILATION_CONDITIONS: "$(inherited) APP_STORE"
 
 schemes:
-  DiskLens:
+  Ringwise:
     build:
       targets:
-        DiskLens: all
+        Ringwise: all
     run:
       config: Debug
     archive:
       config: Release
-  DiskLens-AppStore:
+  Ringwise-AppStore:
     build:
       targets:
-        DiskLens-AppStore: all
+        Ringwise-AppStore: all
     run:
       config: Debug
     archive:

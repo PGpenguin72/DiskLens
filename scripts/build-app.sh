@@ -1,25 +1,25 @@
 #!/bin/bash
-# Builds a release DiskLens.app into dist/ and ad-hoc signs it.
+# Builds a release Ringwise.app into dist/ and ad-hoc signs it.
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
 ROOT="$(pwd)"
-APP="$ROOT/dist/DiskLens.app"
+APP="$ROOT/dist/Ringwise.app"
 VERSION="0.2.0"
 # Build number: commit count, so every build from a newer commit is higher.
 BUILD="$(git rev-list --count HEAD 2>/dev/null || echo 1)"
 
 echo "==> Building release binary"
-swift build -c release --product DiskLens --arch arm64 --arch x86_64
-BIN="$(swift build -c release --product DiskLens --arch arm64 --arch x86_64 --show-bin-path)/DiskLens"
+swift build -c release --product Ringwise --arch arm64 --arch x86_64
+BIN="$(swift build -c release --product Ringwise --arch arm64 --arch x86_64 --show-bin-path)/Ringwise"
 
 echo "==> Assembling $APP"
 rm -rf "$APP"
 mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
-cp "$BIN" "$APP/Contents/MacOS/DiskLens"
+cp "$BIN" "$APP/Contents/MacOS/Ringwise"
 
 echo "==> Compiling the string catalog"
-xcrun xcstringstool compile "$ROOT/Sources/DiskLens/Resources/Localizable.xcstrings" \
+xcrun xcstringstool compile "$ROOT/Sources/Ringwise/Resources/Localizable.xcstrings" \
     --output-directory "$APP/Contents/Resources"
 for lang in zh-Hant zh-Hans en; do
     [ -f "$APP/Contents/Resources/$lang.lproj/Localizable.strings" ] || { echo "error: $lang.lproj missing" >&2; exit 1; }
@@ -27,9 +27,9 @@ done
 
 ICON_KEY=""
 if command -v iconutil >/dev/null; then
-    ICONSET="$(mktemp -d)/DiskLens.iconset"
-    if swift "$ROOT/scripts/make-icon.swift" "$ICONSET" && iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/DiskLens.icns"; then
-        ICON_KEY="<key>CFBundleIconFile</key><string>DiskLens</string>"
+    ICONSET="$(mktemp -d)/Ringwise.iconset"
+    if swift "$ROOT/scripts/make-icon.swift" "$ICONSET" && iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/Ringwise.icns"; then
+        ICON_KEY="<key>CFBundleIconFile</key><string>Ringwise</string>"
     else
         echo "warning: icon generation failed, continuing without an icon" >&2
     fi
@@ -41,10 +41,10 @@ cat > "$APP/Contents/Info.plist" <<PLIST
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleIdentifier</key><string>tw.pg72.disklens</string>
-    <key>CFBundleName</key><string>DiskLens</string>
-    <key>CFBundleDisplayName</key><string>DiskLens</string>
-    <key>CFBundleExecutable</key><string>DiskLens</string>
+    <key>CFBundleIdentifier</key><string>tw.pg72.ringwise</string>
+    <key>CFBundleName</key><string>Ringwise</string>
+    <key>CFBundleDisplayName</key><string>Ringwise</string>
+    <key>CFBundleExecutable</key><string>Ringwise</string>
     <key>CFBundlePackageType</key><string>APPL</string>
     <key>CFBundleShortVersionString</key><string>$VERSION</string>
     <key>CFBundleVersion</key><string>$BUILD</string>

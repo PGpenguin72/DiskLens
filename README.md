@@ -1,10 +1,10 @@
 <div align="center">
 
-<img src="Packaging/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="128" alt="DiskLens icon">
+<img src="Packaging/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="128" alt="Ringwise icon">
 
-# DiskLens
+# Ringwise
 
-**See where your disk space went in seconds.**
+**Your disk, ring by ring.**
 A fast, native, open-source disk-space analyzer for macOS with a Liquid Glass interface.
 
 **English** · [繁體中文](README.zh-Hant.md) · [简体中文](README.zh-Hans.md)
@@ -42,20 +42,20 @@ A fast, native, open-source disk-space analyzer for macOS with a Liquid Glass in
 ## Install
 
 - **Mac App Store:** coming soon.
-- **Direct download:** grab the DMG from [Releases](https://github.com/PGpenguin72/DiskLens/releases) and drag DiskLens to Applications.
-- For complete results, enable **System Settings › Privacy & Security › Full Disk Access** for DiskLens.
+- **Direct download:** grab the DMG from [Releases](https://github.com/PGpenguin72/Ringwise/releases) and drag Ringwise to Applications.
+- For complete results, enable **System Settings › Privacy & Security › Full Disk Access** for Ringwise.
 
 The App Store version is sandboxed, so the first time you scan the whole disk it asks you to select "Macintosh HD". Its AI feature uses Apple's on-device model only.
 
 ## Build from source
 
 ```bash
-git clone https://github.com/PGpenguin72/DiskLens.git
-cd DiskLens
+git clone https://github.com/PGpenguin72/Ringwise.git
+cd Ringwise
 swift build                 # build
 swift test                  # run tests
-./scripts/build-app.sh      # create dist/DiskLens.app
-open dist/DiskLens.app
+./scripts/build-app.sh      # create dist/Ringwise.app
+open dist/Ringwise.app
 ```
 
 For signed builds (Developer ID or App Store), generate the Xcode project with [XcodeGen](https://github.com/yonaskolb/XcodeGen):
@@ -63,7 +63,7 @@ For signed builds (Developer ID or App Store), generate the Xcode project with [
 ```bash
 brew install xcodegen
 xcodegen generate
-open DiskLens.xcodeproj     # schemes: DiskLens (direct) and DiskLens-AppStore
+open Ringwise.xcodeproj     # schemes: Ringwise (direct) and Ringwise-AppStore
 ```
 
 Requires Xcode 26 or later.
@@ -71,7 +71,7 @@ Requires Xcode 26 or later.
 ## How the AI feature works
 
 1. Select items and click **Ask AI** (or right-click › 問 AI).
-2. The first time, DiskLens shows which tool it will run and previews the exact text it will send. Nothing happens until you click **Agree**.
+2. The first time, Ringwise shows which tool it will run and previews the exact text it will send. Nothing happens until you click **Agree**.
 3. The tool runs read-only, with no tools allowed, in an empty temporary folder. Its answer is shown with a safety badge and is cached locally.
 
 Supported providers:
@@ -87,4 +87,4 @@ Issues and pull requests are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING
 
 [MIT](LICENSE) © 2026 PGpenguin72 · [Privacy Policy](docs/PRIVACY.md) · [Terms of Use](docs/TERMS.md)
 
-DiskLens is an independent project. It is not affiliated with Apple, Anthropic, OpenAI or Google.
+Ringwise is an independent project. It is not affiliated with Apple, Anthropic, OpenAI or Google.

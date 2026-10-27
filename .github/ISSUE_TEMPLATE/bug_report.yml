@@ -30,5 +30,5 @@ body:
     id: crash
     attributes:
       label: Crash report (if any) / 當機報告（如果有）
-      description: Console.app › Crash Reports › DiskLens. Please remove private paths.
+      description: Console.app › Crash Reports › Ringwise. Please remove private paths.
       render: text

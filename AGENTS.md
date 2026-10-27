@@ -1,10 +1,10 @@
 # AGENTS.md
 
-Guidance for AI coding agents (Claude Code, Codex, Antigravity, Cursor…) and human contributors working on DiskLens. Read this before you change code.
+Guidance for AI coding agents (Claude Code, Codex, Antigravity, Cursor…) and human contributors working on Ringwise. Read this before you change code.
 
 ## What this is
 
-DiskLens is a native macOS disk-space analyzer: a fast full-disk scanner, a sunburst chart, analysis views (apps, file types, cleanup rules) and optional AI explanations. SwiftUI, Liquid Glass design, macOS 26+, Apple Silicon and Intel.
+Ringwise is a native macOS disk-space analyzer: a fast full-disk scanner, a sunburst chart, analysis views (apps, file types, cleanup rules) and optional AI explanations. SwiftUI, Liquid Glass design, macOS 26+, Apple Silicon and Intel.
 
 There are two builds from one codebase:
 
@@ -18,10 +18,10 @@ There are two builds from one codebase:
 ```bash
 swift build                                                   # debug build (direct)
 swift build -Xswiftc -DAPP_STORE --build-path .build-appstore # App Store configuration
-swift test                                                    # unit tests (DiskLensCore)
-swift run -c release disklens-bench /                         # scanner benchmark
-./scripts/build-app.sh                                        # dist/DiskLens.app (ad-hoc signed)
-xcodegen generate                                             # DiskLens.xcodeproj for signed / App Store builds
+swift test                                                    # unit tests (RingwiseCore)
+swift run -c release ringwise-bench /                         # scanner benchmark
+./scripts/build-app.sh                                        # dist/Ringwise.app (ad-hoc signed)
+xcodegen generate                                             # Ringwise.xcodeproj for signed / App Store builds
 ```
 
 **Both configurations must compile with zero warnings, and `swift test` must pass, before you commit.**
@@ -29,7 +29,7 @@ xcodegen generate                                             # DiskLens.xcodepr
 ## Layout
 
 ```
-Sources/DiskLensCore/        UI-free logic, unit-tested
+Sources/RingwiseCore/        UI-free logic, unit-tested
   Scanner.swift, ScanEngine.swift, BulkDirectoryReader.swift   parallel getattrlistbulk scanner
   FileTree.swift (+Analysis)  struct-of-arrays tree (4–5M nodes on a real disk)
   AppCatalog / AppAttribution / FileCategorizer / CleanupRules  analysis passes (<100 ms each on /)
@@ -37,7 +37,7 @@ Sources/DiskLensCore/        UI-free logic, unit-tested
   AI/                         prompt builder, response parser, cache, providers
                               (CLI providers are #if !APP_STORE)
   UserHome.swift              real home folder (NSHomeDirectory() is the container inside the sandbox)
-Sources/DiskLens/            SwiftUI app
+Sources/Ringwise/            SwiftUI app
   Model/AppModel.swift        @MainActor @Observable central state; FileTree is @ObservationIgnored,
                               bump `revision` after mutating it
   Model/AnalysisStore.swift   runs analyses off the main actor after each scan
@@ -45,9 +45,9 @@ Sources/DiskLens/            SwiftUI app
   Views/                      Theme.swift has the palette, AmbientBackground, .glassCard(), StatChip
   Support/ScanAccess.swift    security-scoped bookmarks (App Store build)
   Resources/Localizable.xcstrings   String Catalog, source language zh-Hant
-Sources/disklens-bench/      scanner benchmark CLI
+Sources/ringwise-bench/      scanner benchmark CLI
 Packaging/                   Info.plist, entitlements, PrivacyInfo.xcprivacy, AppIcon asset catalog
-project.yml                  XcodeGen spec: targets DiskLens and DiskLens-AppStore
+project.yml                  XcodeGen spec: targets Ringwise and Ringwise-AppStore
 docs/                        privacy policy, terms, translating, App Store checklist
 ```
 
@@ -65,7 +65,7 @@ docs/                        privacy policy, terms, translating, App Store check
 
 - Match the surrounding code: concise, doc comments on types and non-obvious members, sparse inline comments.
 - Design language is Liquid Glass: `.glassCard()`, `.glassEffect`, `GlassEffectContainer`, `.buttonStyle(.glass / .glassProminent)`, colors from `Theme.palette`. Tables use `.scrollContentBackground(.hidden)`, `.alternatingRowBackgrounds(.disabled)` and `.overlayScrollers()`.
-- **Localization:** write UI text as Traditional Chinese literals (`Text("…")`, `Button("…")`, `String(localized: "…")`). Building with Xcode syncs them into `Localizable.xcstrings`; add zh-Hans and en translations there. Use whole sentences with interpolation, not concatenated fragments. **DiskLensCore has no user-facing text:** it returns reason codes and errors (`ProtectionReason`, `AIUnavailableReason`, `AIError`), and the app turns them into text in `Model/CoreMessages.swift`. If Xcode's build doesn't sync the catalog, build both schemes and run `xcrun xcstringstool sync Localizable.xcstrings --stringsdata <DerivedData>/**/*.stringsdata`. Other languages come from Crowdin (see `docs/TRANSLATING.md`).
+- **Localization:** write UI text as Traditional Chinese literals (`Text("…")`, `Button("…")`, `String(localized: "…")`). Building with Xcode syncs them into `Localizable.xcstrings`; add zh-Hans and en translations there. Use whole sentences with interpolation, not concatenated fragments. **RingwiseCore has no user-facing text:** it returns reason codes and errors (`ProtectionReason`, `AIUnavailableReason`, `AIError`), and the app turns them into text in `Model/CoreMessages.swift`. If Xcode's build doesn't sync the catalog, build both schemes and run `xcrun xcstringstool sync Localizable.xcstrings --stringsdata <DerivedData>/**/*.stringsdata`. Other languages come from Crowdin (see `docs/TRANSLATING.md`).
 
 ## Testing the UI without disturbing the user
 
@@ -73,20 +73,20 @@ The app has environment hooks for automated checks:
 
 | Variable | Effect |
 |---|---|
-| `DISKLENS_SELFTEST=<path>` | headless scan + analysis summary, then exit |
-| `DISKLENS_AUTOSCAN=<path>` | start scanning on launch (skips onboarding) |
-| `DISKLENS_AUTOOPEN=<path>` | open a folder after the scan |
-| `DISKLENS_SIDEBAR=apps\|fileTypes\|cleanup\|largeFiles` | open a view |
-| `DISKLENS_DEMO_MULTISELECT=1` | multi-select mode with 3 rows selected |
-| `DISKLENS_DEMO_AI=consent\|results\|settings\|noprovider` | show AI sheets (`DISKLENS_DEMO_AI_PROVIDER=apple`) |
-| `DISKLENS_DEMO_ONBOARDING=1` | show the tour |
-| `DISKLENS_DEMO_ABOUT=1` | open the About window |
-| `DISKLENS_SETTINGS_PANE=general\|ai\|feedback\|about` | open Settings on that tab |
-| `DISKLENS_FAKE_NO_FDA=1` | pretend Full Disk Access is missing |
-| `DISKLENS_AI_SELFTEST=<path>` (+ `_RUN=<provider>`) | headless AI prompt / live run |
+| `RINGWISE_SELFTEST=<path>` | headless scan + analysis summary, then exit |
+| `RINGWISE_AUTOSCAN=<path>` | start scanning on launch (skips onboarding) |
+| `RINGWISE_AUTOOPEN=<path>` | open a folder after the scan |
+| `RINGWISE_SIDEBAR=apps\|fileTypes\|cleanup\|largeFiles` | open a view |
+| `RINGWISE_DEMO_MULTISELECT=1` | multi-select mode with 3 rows selected |
+| `RINGWISE_DEMO_AI=consent\|results\|settings\|noprovider` | show AI sheets (`RINGWISE_DEMO_AI_PROVIDER=apple`) |
+| `RINGWISE_DEMO_ONBOARDING=1` | show the tour |
+| `RINGWISE_DEMO_ABOUT=1` | open the About window |
+| `RINGWISE_SETTINGS_PANE=general\|ai\|feedback\|about` | open Settings on that tab |
+| `RINGWISE_FAKE_NO_FDA=1` | pretend Full Disk Access is missing |
+| `RINGWISE_AI_SELFTEST=<path>` (+ `_RUN=<provider>`) | headless AI prompt / live run |
 
-To screenshot: launch `.build/release/DiskLens` in the background, find its window by **your own PID** with `CGWindowListCopyWindowInfo`, then `screencapture -x -o -l <windowid>`.
+To screenshot: launch `.build/release/Ringwise` in the background, find its window by **your own PID** with `CGWindowListCopyWindowInfo`, then `screencapture -x -o -l <windowid>`.
 
 - **Never** post synthetic mouse or keyboard events (CGEvent, System Events). They land in whatever app the user is using.
-- **Never** quit or kill processes you didn't start, including an installed `/Applications/DiskLens.app`.
+- **Never** quit or kill processes you didn't start, including an installed `/Applications/Ringwise.app`.
 - **Never** trash or move real files in tests; use a temp directory.

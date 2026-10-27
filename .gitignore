@@ -3,6 +3,6 @@
 *.app
 dist/
 .claude/
-DiskLens.xcodeproj/
+Ringwise.xcodeproj/
 .build-xcode/
 .build-appstore/

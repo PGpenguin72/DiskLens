@@ -1,10 +1,10 @@
 <div align="center">
 
-<img src="Packaging/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="128" alt="DiskLens 图标">
+<img src="Packaging/Assets.xcassets/AppIcon.appiconset/icon_256x256.png" width="128" alt="Ringwise 图标">
 
-# DiskLens
+# Ringwise
 
-**几秒内看出磁盘空间都去哪了。**
+**一圈一圈，看清你的磁盘。**
 快速、原生、开源的 macOS 磁盘空间分析工具，采用 Liquid Glass 界面。
 
 [English](README.md) · [繁體中文](README.zh-Hant.md) · **简体中文**
@@ -40,20 +40,20 @@
 ## 安装
 
 - **Mac App Store**：即将上架。
-- **直接下载**：在 [Releases](https://github.com/PGpenguin72/DiskLens/releases) 下载 DMG，把 DiskLens 拖进“应用程序”。
-- 想看到完整结果，请在 **系统设置 › 隐私与安全性 › 完全磁盘访问权限** 中开启 DiskLens。
+- **直接下载**：在 [Releases](https://github.com/PGpenguin72/Ringwise/releases) 下载 DMG，把 Ringwise 拖进“应用程序”。
+- 想看到完整结果，请在 **系统设置 › 隐私与安全性 › 完全磁盘访问权限** 中开启 Ringwise。
 
 App Store 版有沙盒限制，第一次扫描整个磁盘时会请你选择“Macintosh HD”；AI 功能只使用 Apple 设备端模型。
 
 ## 从源码构建
 
 ```bash
-git clone https://github.com/PGpenguin72/DiskLens.git
-cd DiskLens
+git clone https://github.com/PGpenguin72/Ringwise.git
+cd Ringwise
 swift build                 # 构建
 swift test                  # 运行测试
-./scripts/build-app.sh      # 生成 dist/DiskLens.app
-open dist/DiskLens.app
+./scripts/build-app.sh      # 生成 dist/Ringwise.app
+open dist/Ringwise.app
 ```
 
 需要签名的版本（Developer ID 或 App Store），请用 [XcodeGen](https://github.com/yonaskolb/XcodeGen) 生成 Xcode 项目：
@@ -61,7 +61,7 @@ open dist/DiskLens.app
 ```bash
 brew install xcodegen
 xcodegen generate
-open DiskLens.xcodeproj     # scheme：DiskLens（直接下载版）、DiskLens-AppStore
+open Ringwise.xcodeproj     # scheme：Ringwise（直接下载版）、Ringwise-AppStore
 ```
 
 需要 Xcode 26 或更高版本。
@@ -69,7 +69,7 @@ open DiskLens.xcodeproj     # scheme：DiskLens（直接下载版）、DiskLens-
 ## AI 功能如何工作
 
 1. 选中项目后点“问 AI”（或右键 › 问 AI）。
-2. 第一次使用时，DiskLens 会告诉你要运行哪个工具，并让你预览实际会发送的文字。你点“同意”之前，什么都不会发生。
+2. 第一次使用时，Ringwise 会告诉你要运行哪个工具，并让你预览实际会发送的文字。你点“同意”之前，什么都不会发生。
 3. 工具会在一个空的临时文件夹里，以只读、不能使用任何工具的模式运行。回答会附上安全程度标识，并缓存在本机。
 
 支持的工具：
@@ -85,4 +85,4 @@ open DiskLens.xcodeproj     # scheme：DiskLens（直接下载版）、DiskLens-
 
 [MIT](LICENSE) © 2026 PGpenguin72 · [隐私政策](docs/PRIVACY.zh-Hans.md) · [使用条款](docs/TERMS.zh-Hans.md)
 
-DiskLens 是独立项目，与 Apple、Anthropic、OpenAI、Google 没有任何关联。
+Ringwise 是独立项目，与 Apple、Anthropic、OpenAI、Google 没有任何关联。

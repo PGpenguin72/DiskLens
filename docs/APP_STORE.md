@@ -1,6 +1,6 @@
 # 上架 Mac App Store 指南
 
-這份文件整理了把 DiskLens 送上 Mac App Store 需要的所有步驟和文字。標 🧑 的步驟必須用你自己的 Apple 開發者帳號操作。
+這份文件整理了把 Ringwise 送上 Mac App Store 需要的所有步驟和文字。標 🧑 的步驟必須用你自己的 Apple 開發者帳號操作。
 
 > 要交給 AI agent（例如 Codex）代為操作瀏覽器和 Xcode，請給它 [`APP_STORE_SUBMISSION_GUIDE.md`](APP_STORE_SUBMISSION_GUIDE.md)。
 
@@ -8,8 +8,8 @@
 
 | 項目 | 位置 |
 |---|---|
-| Xcode 專案設定（App Store 版 `DiskLens-AppStore` 與直接下載版 `DiskLens`） | `project.yml`（執行 `xcodegen generate` 產生） |
-| 沙盒權限（使用者選取檔案讀寫、security-scoped bookmark） | `Packaging/DiskLensAppStore.entitlements` |
+| Xcode 專案設定（App Store 版 `Ringwise-AppStore` 與直接下載版 `Ringwise`） | `project.yml`（執行 `xcodegen generate` 產生） |
+| 沙盒權限（使用者選取檔案讀寫、security-scoped bookmark） | `Packaging/RingwiseAppStore.entitlements` |
 | 隱私清單（不追蹤、不收集資料，並寫明讀取 API 的理由） | `Packaging/PrivacyInfo.xcprivacy` |
 | App 圖示 | `Packaging/Assets.xcassets/AppIcon.appiconset` |
 | Info.plist（類別：工具程式、無加密聲明） | `Packaging/Info.plist` |
@@ -24,17 +24,17 @@
    ```bash
    brew install xcodegen   # 已安裝可略過
    xcodegen generate
-   open DiskLens.xcodeproj
+   open Ringwise.xcodeproj
    ```
-4. 🧑 **設定簽章**：選 target `DiskLens-AppStore` › Signing & Capabilities › Team 選你的團隊。Xcode 會自動產生憑證和描述檔。（也可以把 Team ID 填到 `project.yml` 的 `DEVELOPMENT_TEAM`，之後重新產生專案就不用每次手動選。）
-5. 🧑 **確認 Bundle ID**：預設是 `tw.pg72.disklens`。如果你想用自己的網域，改 `project.yml` 的 `PRODUCT_BUNDLE_IDENTIFIER`。Bundle ID 一旦用在上架的 App 上就不能再改。
+4. 🧑 **設定簽章**：選 target `Ringwise-AppStore` › Signing & Capabilities › Team 選你的團隊。Xcode 會自動產生憑證和描述檔。（也可以把 Team ID 填到 `project.yml` 的 `DEVELOPMENT_TEAM`，之後重新產生專案就不用每次手動選。）
+5. 🧑 **確認 Bundle ID**：預設是 `tw.pg72.ringwise`。如果你想用自己的網域，改 `project.yml` 的 `PRODUCT_BUNDLE_IDENTIFIER`。Bundle ID 一旦用在上架的 App 上就不能再改。
 6. 🧑 **在 App Store Connect 建立 App**（<https://appstoreconnect.apple.com> › 我的 App › ＋）：
    - 平台：macOS
-   - 名稱：`DiskLens`（若已被使用，可改用「DiskLens – 磁碟空間分析」之類的名稱）
+   - 名稱：`PG Ringwise`（若已被使用，可改用「PG Ringwise – 磁碟空間」）
    - 主要語言：繁體中文
    - Bundle ID：選第 5 步的那個
-   - SKU：例如 `disklens-macos`
-7. 🧑 **封存並上傳**：Xcode 上方的 scheme 選 `DiskLens-AppStore`，目的地選 `Any Mac`，然後 Product › Archive › Distribute App › App Store Connect › Upload。
+   - SKU：例如 `ringwise-macos`
+7. 🧑 **封存並上傳**：Xcode 上方的 scheme 選 `Ringwise-AppStore`，目的地選 `Any Mac`，然後 Product › Archive › Distribute App › App Store Connect › Upload。
 8. 🧑 **填寫 App 資訊**：把下面的文字貼到 App Store Connect，上傳截圖，選價格（免費），隱私權問卷依下方回答。
 9. 🧑 **送審**。
 
@@ -49,7 +49,7 @@
 ## 隱私權問卷（App Privacy）
 
 - 你或第三方合作夥伴會從這個 App 收集資料嗎？→ **不會（Data Not Collected）**
-- 理由：DiskLens 沒有網路功能、分析或追蹤；App Store 版的 AI 只用 Apple 裝置端模型，資料不會離開裝置。
+- 理由：Ringwise 沒有網路功能、分析或追蹤；App Store 版的 AI 只用 Apple 裝置端模型，資料不會離開裝置。
 
 ## 年齡分級
 
@@ -65,15 +65,15 @@
 
 ### 繁體中文（主要語言）
 
-**名稱**：DiskLens
-**副標題（30 字內）**：看見磁碟空間都跑去哪了
+**名稱**：PG Ringwise
+**副標題（30 字內）**：一圈一圈，看清你的磁碟
 **宣傳文字**：全新 Liquid Glass 設計。幾十秒掃完整顆磁碟，用環狀圖一眼找出最佔空間的檔案。
-**關鍵字**：磁碟,空間,清理,儲存空間,大檔案,快取,分析,容量,垃圾,DaisyDisk
+**關鍵字**：磁碟,空間,清理,儲存空間,大檔案,快取,分析,容量,垃圾,環狀圖
 
 **描述**：
 
 ```
-DiskLens 幫你在幾十秒內掃完整顆磁碟，用漂亮的環狀圖一眼看出空間都跑去哪了。
+Ringwise 幫你在幾十秒內掃完整顆磁碟，用漂亮的環狀圖一眼看出空間都跑去哪了。
 
 【快速又流暢】
 • 多執行緒掃描，數百萬個檔案也只要幾十秒
@@ -98,22 +98,22 @@ DiskLens 幫你在幾十秒內掃完整顆磁碟，用漂亮的環狀圖一眼�
 • 只讀取檔案名稱、大小和日期，不讀取檔案內容
 
 【重視隱私】
-沒有分析、沒有追蹤、沒有帳號。DiskLens 是開源軟體（MIT 授權）。
+沒有分析、沒有追蹤、沒有帳號。Ringwise 是開源軟體（MIT 授權）。
 
 需要 macOS 26 以上。
 ```
 
 ### 简体中文
 
-**名称**：DiskLens
-**副标题**：看见磁盘空间都去哪了
+**名称**：PG Ringwise
+**副标题**：一圈一圈，看清你的磁盘
 **推广文本**：全新 Liquid Glass 设计。几十秒扫完整个磁盘，用环形图一眼找出最占空间的文件。
-**关键词**：磁盘,空间,清理,存储空间,大文件,缓存,分析,容量,垃圾,DaisyDisk
+**关键词**：磁盘,空间,清理,存储空间,大文件,缓存,分析,容量,垃圾,环形图
 
 **描述**：
 
 ```
-DiskLens 帮你在几十秒内扫完整个磁盘，用漂亮的环形图一眼看出空间都去哪了。
+Ringwise 帮你在几十秒内扫完整个磁盘，用漂亮的环形图一眼看出空间都去哪了。
 
 【快速又流畅】
 • 多线程扫描，数百万个文件也只要几十秒
@@ -138,22 +138,22 @@ DiskLens 帮你在几十秒内扫完整个磁盘，用漂亮的环形图一眼�
 • 只读取文件名称、大小和日期，不读取文件内容
 
 【重视隐私】
-没有分析、没有跟踪、没有账号。DiskLens 是开源软件（MIT 许可证）。
+没有分析、没有跟踪、没有账号。Ringwise 是开源软件（MIT 许可证）。
 
 需要 macOS 26 或更高版本。
 ```
 
 ### English
 
-**Name**: DiskLens
-**Subtitle**: See where your space went
+**Name**: PG Ringwise
+**Subtitle**: Your disk, ring by ring
 **Promotional text**: All-new Liquid Glass design. Scan your entire disk in seconds and spot the biggest space hogs at a glance.
-**Keywords**: disk,space,cleaner,storage,analyzer,large files,cache,usage,cleanup,DaisyDisk
+**Keywords**: disk,space,cleaner,storage,analyzer,large files,cache,usage,cleanup,sunburst
 
 **Description**:
 
 ```
-DiskLens scans your entire disk in seconds and shows where your space went in a beautiful sunburst chart.
+Ringwise scans your entire disk in seconds and shows where your space went in a beautiful sunburst chart.
 
 FAST AND SMOOTH
 • Multithreaded scanning handles millions of files in seconds
@@ -170,7 +170,7 @@ FIND WHAT YOU CAN CLEAN
 • Large files list and instant search
 
 AI HELPER
-Not sure what something is? Ask Apple's on-device model what it is and whether it's safe to delete. Everything is processed on your Mac, nothing is uploaded, and DiskLens always asks for your consent first.
+Not sure what something is? Ask Apple's on-device model what it is and whether it's safe to delete. Everything is processed on your Mac, nothing is uploaded, and Ringwise always asks for your consent first.
 
 SAFE BY DESIGN
 • Items only go to the Trash, so you can restore them until you empty it
@@ -178,21 +178,21 @@ SAFE BY DESIGN
 • Only file names, sizes and dates are read, never file contents
 
 PRIVATE
-No analytics, no tracking, no accounts. DiskLens is open source (MIT License).
+No analytics, no tracking, no accounts. Ringwise is open source (MIT License).
 
 Requires macOS 26 or later.
 ```
 
 ### 網址（三種語言共用）
 
-- 支援網址：`https://github.com/PGpenguin72/DiskLens/issues`（聯絡信箱：developer@pg72.tw）
-- 行銷網址：`https://github.com/PGpenguin72/DiskLens`
-- 隱私權政策網址：`https://github.com/PGpenguin72/DiskLens/blob/main/docs/PRIVACY.md`
+- 支援網址：`https://github.com/PGpenguin72/Ringwise/issues`（聯絡信箱：developer@pg72.tw）
+- 行銷網址：`https://github.com/PGpenguin72/Ringwise`
+- 隱私權政策網址：`https://github.com/PGpenguin72/Ringwise/blob/main/docs/PRIVACY.md`
 
 ## 給審核人員的備註（App Review Information › Notes）
 
 ```
-DiskLens is a disk-space analyzer. It is sandboxed: to scan the whole disk, the user selects "Macintosh HD" in the standard open panel the first time; access is remembered with a security-scoped bookmark. To test quickly, you can also choose "選擇資料夾…" (Choose Folder…) and pick any folder.
+Ringwise is a disk-space analyzer. It is sandboxed: to scan the whole disk, the user selects "Macintosh HD" in the standard open panel the first time; access is remembered with a security-scoped bookmark. To test quickly, you can also choose "選擇資料夾…" (Choose Folder…) and pick any folder.
 
 Deleting only moves items to the Trash after confirmation; protected system locations are refused.
 

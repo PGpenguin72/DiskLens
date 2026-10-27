@@ -1,15 +1,15 @@
-# Contributing to DiskLens
+# Contributing to Ringwise
 
 Thanks for helping! Bug reports, ideas, translations and pull requests are all welcome. 中文的 issue 和 PR 也非常歡迎。
 
 ## Reporting bugs
 
-Open an [issue](https://github.com/PGpenguin72/DiskLens/issues/new/choose) and include:
+Open an [issue](https://github.com/PGpenguin72/Ringwise/issues/new/choose) and include:
 
 - your macOS version and Mac model (Apple Silicon or Intel);
 - whether you use the App Store or the direct-download build;
 - what you did, what you expected, and what happened;
-- for crashes, the crash report from Console.app (**Crash Reports › DiskLens**).
+- for crashes, the crash report from Console.app (**Crash Reports › Ringwise**).
 
 Please don't paste full scan results or file lists that reveal private information.
 
@@ -18,10 +18,10 @@ Please don't paste full scan results or file lists that reveal private informati
 You need Xcode 26 or later on macOS 26 or later.
 
 ```bash
-git clone https://github.com/PGpenguin72/DiskLens.git
-cd DiskLens
+git clone https://github.com/PGpenguin72/Ringwise.git
+cd Ringwise
 swift build && swift test
-./scripts/build-app.sh && open dist/DiskLens.app
+./scripts/build-app.sh && open dist/Ringwise.app
 ```
 
 Read [AGENTS.md](AGENTS.md) before changing code. It explains the architecture, the two build configurations (direct and App Store), and a few rules learned the hard way.
@@ -36,7 +36,7 @@ Read [AGENTS.md](AGENTS.md) before changing code. It explains the architecture, 
    swift build -Xswiftc -DAPP_STORE --build-path .build-appstore
    swift test
    ```
-4. Write UI text in Traditional Chinese literals, and add the zh-Hans and en translations to `Sources/DiskLens/Resources/Localizable.xcstrings` (Xcode adds the keys when you build). Translations for other languages come from Crowdin, so don't edit those by hand.
+4. Write UI text in Traditional Chinese literals, and add the zh-Hans and en translations to `Sources/Ringwise/Resources/Localizable.xcstrings` (Xcode adds the keys when you build). Translations for other languages come from Crowdin, so don't edit those by hand.
 5. Describe what changed and how you tested it. For UI changes, include a screenshot.
 
 ### Ground rules
