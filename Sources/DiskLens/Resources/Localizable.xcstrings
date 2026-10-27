@@ -1473,22 +1473,6 @@
         }
       }
     },
-    "之後會在這裡加入一般設定。" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "General settings will appear here in a future version."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "以后会在这里加入通用设置。"
-          }
-        }
-      }
-    },
     "了解如何開啟" : {
       "localizations" : {
         "en" : {
@@ -1887,6 +1871,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "其他"
+          }
+        }
+      }
+    },
+    "再看一次" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Again"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再看一次"
           }
         }
       }
@@ -2901,6 +2901,22 @@
         }
       }
     },
+    "已授權的磁碟與資料夾" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Authorized Disks & Folders"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已授权的磁盘与文件夹"
+          }
+        }
+      }
+    },
     "已於 %@ 同意" : {
       "localizations" : {
         "en" : {
@@ -2913,6 +2929,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已于 %@ 同意"
+          }
+        }
+      }
+    },
+    "已移除" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Removed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已移除"
           }
         }
       }
@@ -3425,6 +3457,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新手导览"
+          }
+        }
+      }
+    },
+    "更改語言後需要重新啟動 DiskLens。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restart DiskLens to apply the new language."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更改语言后需要重新启动 DiskLens。"
           }
         }
       }
@@ -4385,6 +4433,38 @@
         }
       }
     },
+    "移除後，下次掃描時會再詢問一次。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You'll be asked again the next time you scan."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移除后，下次扫描时会再次询问。"
+          }
+        }
+      }
+    },
+    "移除所有授權" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove All Access"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移除所有授权"
+          }
+        }
+      }
+    },
     "程式碼" : {
       "localizations" : {
         "en" : {
@@ -4413,6 +4493,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "空文件夹"
+          }
+        }
+      }
+    },
+    "立即重新啟動" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restart Now"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "立即重新启动"
           }
         }
       }
@@ -4509,6 +4605,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "系统设置 › 隐私与安全性 › 完全磁盘访问权限 › 打开 DiskLens"
+          }
+        }
+      }
+    },
+    "結束 DiskLens" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quit DiskLens"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出 DiskLens"
+          }
+        }
+      }
+    },
+    "結束 DiskLens 再重新打開後，就會換成新的語言。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quit and reopen DiskLens to apply the new language."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出 DiskLens 再重新打开后，就会切换到新的语言。"
           }
         }
       }
@@ -4701,6 +4829,22 @@
         }
       }
     },
+    "語言" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语言"
+          }
+        }
+      }
+    },
     "請在 Finder 中清空垃圾桶。" : {
       "localizations" : {
         "en" : {
@@ -4825,6 +4969,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "超过 90 天未改动的项目依赖，需要时运行 npm install 即可重新下载。"
+          }
+        }
+      }
+    },
+    "跟隨系統" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System Default"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跟随系统"
           }
         }
       }

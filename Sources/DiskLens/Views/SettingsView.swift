@@ -1,10 +1,10 @@
 import SwiftUI
 import DiskLensCore
 
-/// Settings window (⌘,): a General placeholder and the AI section.
+/// Settings window (⌘,): General (language, tour, access) and the AI section.
 struct SettingsView: View {
     enum Pane: Hashable { case general, ai }
-    @State var pane: Pane = .ai
+    @State var pane: Pane = .general
 
     var body: some View {
         TabView(selection: $pane) {
@@ -20,12 +20,49 @@ struct SettingsView: View {
 }
 
 private struct GeneralSettings: View {
+    @Environment(AppModel.self) private var model
+    @State private var language = AppLanguage.current
+    @State private var accessCleared = false
+
     var body: some View {
         Form {
             Section {
-                Text("之後會在這裡加入一般設定。")
+                Picker("語言", selection: $language) {
+                    ForEach(AppLanguage.allCases) { option in
+                        // Language names are shown in their own language, so they're not localized.
+                        if option == .system { Text("跟隨系統").tag(option) } else { Text(verbatim: option.nativeName).tag(option) }
+                    }
+                }
+                .onChange(of: language) { _, new in new.apply() }
+                if language != AppLanguage.launched {
+                    HStack {
+                        Text(AppLanguage.canRelaunch ? "更改語言後需要重新啟動 DiskLens。" : "結束 DiskLens 再重新打開後，就會換成新的語言。")
+                            .foregroundStyle(.secondary)
+                        Spacer()
+                        Button(AppLanguage.canRelaunch ? "立即重新啟動" : "結束 DiskLens") { AppLanguage.relaunch() }
+                            .buttonStyle(.glassProminent)
+                    }
+                }
+            }
+            Section {
+                LabeledContent("新手導覽") {
+                    Button("再看一次") { model.showingOnboarding = true }
+                }
+            }
+            #if APP_STORE
+            Section {
+                LabeledContent("已授權的磁碟與資料夾") {
+                    Button(accessCleared ? "已移除" : "移除所有授權") {
+                        ScanAccess.forgetAll()
+                        accessCleared = true
+                    }
+                    .disabled(accessCleared)
+                }
+                Text("移除後，下次掃描時會再詢問一次。")
+                    .font(.caption)
                     .foregroundStyle(.secondary)
             }
+            #endif
         }
         .formStyle(.grouped)
     }
