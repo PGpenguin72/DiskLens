@@ -1,10 +1,20 @@
 import SwiftUI
 import DiskLensCore
 
-/// Settings window (⌘,): General (language, tour, access) and the AI section.
+/// Settings window (⌘,): General, AI, Feedback and About.
 struct SettingsView: View {
-    enum Pane: Hashable { case general, ai }
-    @State var pane: Pane = .general
+    enum Pane: Hashable { case general, ai, feedback, about }
+    @State var pane: Pane = SettingsView.initialPane
+
+    /// `.general`, unless a screenshot hook asked for another tab.
+    private static var initialPane: Pane {
+        switch ProcessInfo.processInfo.environment["DISKLENS_SETTINGS_PANE"] {
+        case "ai": return .ai
+        case "feedback": return .feedback
+        case "about": return .about
+        default: return .general
+        }
+    }
 
     var body: some View {
         TabView(selection: $pane) {
@@ -13,6 +23,12 @@ struct SettingsView: View {
             }
             Tab("AI", systemImage: "sparkles", value: .ai) {
                 AISettings()
+            }
+            Tab("意見回饋", systemImage: "bubble.left.and.text.bubble.right", value: .feedback) {
+                FeedbackSettings()
+            }
+            Tab("關於", systemImage: "info.circle", value: .about) {
+                AboutSettings()
             }
         }
         .frame(width: 560, height: 520)
@@ -63,6 +79,115 @@ private struct GeneralSettings: View {
                     .foregroundStyle(.secondary)
             }
             #endif
+        }
+        .formStyle(.grouped)
+    }
+}
+
+private struct FeedbackSettings: View {
+    @State private var copied = false
+
+    var body: some View {
+        Form {
+            Section {
+                LabeledContent {
+                    Link("回報問題…", destination: AppInfo.bugReport)
+                } label: {
+                    Text("遇到問題或當機")
+                    Text("會打開 GitHub 的回報表單，並自動帶入版本與系統資訊，不含任何檔案資訊。")
+                }
+                LabeledContent {
+                    Link("建議新功能…", destination: AppInfo.featureRequest)
+                } label: {
+                    Text("有想要的功能")
+                    Text("歡迎到 GitHub 分享你的想法。")
+                }
+                LabeledContent {
+                    Button(copied ? "已拷貝" : "拷貝") {
+                        AppInfo.copyDiagnostics()
+                        copied = true
+                    }
+                } label: {
+                    Text("診斷資訊")
+                    Text(verbatim: AppInfo.diagnostics)
+                        .font(.caption.monospaced())
+                        .textSelection(.enabled)
+                }
+            } header: {
+                Text("回報與建議")
+            }
+            Section {
+                LabeledContent {
+                    Link("協助翻譯…", destination: AppInfo.translate)
+                } label: {
+                    Text("讓 DiskLens 支援你的語言")
+                    Text("目前支援繁體中文、简体中文和 English。翻譯可以由人工或 AI 協助完成。")
+                }
+            } header: {
+                Text("翻譯")
+            }
+            Section {
+                LabeledContent {
+                    Link("前往 GitHub", destination: AppInfo.repository)
+                } label: {
+                    Text("在 GitHub 上給顆星")
+                    Text("DiskLens 是免費的開源軟體，你的支持是持續更新的動力。")
+                }
+            } header: {
+                Text("支持 DiskLens")
+            }
+        }
+        .formStyle(.grouped)
+    }
+}
+
+private struct AboutSettings: View {
+    var body: some View {
+        Form {
+            Section {
+                HStack(spacing: 14) {
+                    Image(nsImage: NSApp.applicationIconImage)
+                        .resizable()
+                        .frame(width: 64, height: 64)
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(verbatim: "DiskLens")
+                            .font(.title2.weight(.bold))
+                        Text("看見磁碟空間都跑去哪了。")
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
+            Section {
+                LabeledContent("作者") { Text(verbatim: AppInfo.author) }
+                LabeledContent("版本") {
+                    Text(verbatim: "\(AppInfo.version) (\(AppInfo.build))").monospacedDigit().textSelection(.enabled)
+                }
+                LabeledContent("版本類型") { Text(verbatim: AppInfo.localizedEdition) }
+                LabeledContent("授權") { Link("MIT 授權", destination: AppInfo.license) }
+                LabeledContent("原始碼") { Link(destination: AppInfo.repository) { Text(verbatim: "github.com/PGpenguin72/DiskLens") } }
+            }
+            Section {
+                LabeledContent("隱私權") {
+                    Link("隱私權政策", destination: AppInfo.privacy)
+                }
+                LabeledContent("條款") {
+                    Link("使用條款", destination: AppInfo.terms)
+                }
+                Text("DiskLens 不收集任何資料，也不會自行連上網路。")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            Section {
+                Text("DiskLens 只使用 Apple 的系統框架，不包含任何第三方套件。")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Text(verbatim: AppInfo.copyright)
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+            } header: {
+                Text("致謝與版權")
+            }
         }
         .formStyle(.grouped)
     }

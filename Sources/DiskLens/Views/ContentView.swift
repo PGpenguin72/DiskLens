@@ -5,6 +5,7 @@ import DiskLensCore
 struct ContentView: View {
     @Environment(AppModel.self) private var model
     @Environment(\.openSettings) private var openSettings
+    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         @Bindable var model = model
@@ -64,6 +65,9 @@ struct ContentView: View {
                let item = SidebarItem.allCases.first(where: { "\($0)" == name }) {
                 model.sidebar = item
             }
+            // Debug hooks for screenshots: the About window, or Settings on a given tab.
+            if env["DISKLENS_DEMO_ABOUT"] != nil { openWindow(id: "about") }
+            if env["DISKLENS_SETTINGS_PANE"] != nil { openSettings() }
             // Debug hook for automated UI checks: start scanning this path right away.
             if let path = ProcessInfo.processInfo.environment["DISKLENS_AUTOSCAN"], !path.isEmpty {
                 model.startScan(URL(fileURLWithPath: path))

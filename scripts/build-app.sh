@@ -6,6 +6,8 @@ cd "$(dirname "$0")/.."
 ROOT="$(pwd)"
 APP="$ROOT/dist/DiskLens.app"
 VERSION="0.2.0"
+# Build number: commit count, so every build from a newer commit is higher.
+BUILD="$(git rev-list --count HEAD 2>/dev/null || echo 1)"
 
 echo "==> Building release binary"
 swift build -c release --product DiskLens --arch arm64 --arch x86_64
@@ -45,7 +47,7 @@ cat > "$APP/Contents/Info.plist" <<PLIST
     <key>CFBundleExecutable</key><string>DiskLens</string>
     <key>CFBundlePackageType</key><string>APPL</string>
     <key>CFBundleShortVersionString</key><string>$VERSION</string>
-    <key>CFBundleVersion</key><string>$VERSION</string>
+    <key>CFBundleVersion</key><string>$BUILD</string>
     <key>CFBundleInfoDictionaryVersion</key><string>6.0</string>
     <key>CFBundleDevelopmentRegion</key><string>zh-Hant</string>
     <key>CFBundleLocalizations</key><array><string>zh-Hant</string><string>zh-Hans</string><string>en</string></array>

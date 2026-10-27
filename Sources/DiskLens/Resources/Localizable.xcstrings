@@ -639,6 +639,22 @@
         }
       }
     },
+    "DiskLens 不收集任何資料，也不會自行連上網路。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DiskLens collects no data and never connects to the internet on its own."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DiskLens 不收集任何数据，也不会自行联网。"
+          }
+        }
+      }
+    },
     "DiskLens 不會自動刪除任何東西：選取項目後，再用下方的「丟到垃圾桶」。" : {
       "localizations" : {
         "en" : {
@@ -667,6 +683,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "DiskLens 不会自行连接任何 AI 服务，而是使用你 Mac 上已有的 AI。请先打开或安装以下其中一项："
+          }
+        }
+      }
+    },
+    "DiskLens 只使用 Apple 的系統框架，不包含任何第三方套件。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DiskLens uses only Apple's system frameworks and contains no third-party packages."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DiskLens 只使用 Apple 的系统框架，不包含任何第三方组件。"
+          }
+        }
+      }
+    },
+    "DiskLens 是免費的開源軟體，你的支持是持續更新的動力。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DiskLens is free and open source. Your support keeps it going."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DiskLens 是免费的开源软件，你的支持是持续更新的动力。"
+          }
+        }
+      }
+    },
+    "DiskLens 是開源軟體，不收集任何資料。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DiskLens is open source and collects no data."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DiskLens 是开源软件，不收集任何数据。"
           }
         }
       }
@@ -737,6 +801,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "访达"
+          }
+        }
+      }
+    },
+    "GitHub" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub"
           }
         }
       }
@@ -817,6 +897,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "JavaScript 包管理器的下载缓存，下次安装时会重新下载。"
+          }
+        }
+      }
+    },
+    "MIT 授權" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MIT License"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MIT 许可证"
+          }
+        }
+      }
+    },
+    "Mac App Store 版" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac App Store"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mac App Store 版"
           }
         }
       }
@@ -1505,6 +1617,22 @@
         }
       }
     },
+    "作者" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Author"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作者"
+          }
+        }
+      }
+    },
     "使用" : {
       "localizations" : {
         "en" : {
@@ -1923,6 +2051,70 @@
         }
       }
     },
+    "前往 GitHub" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open GitHub"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "前往 GitHub"
+          }
+        }
+      }
+    },
+    "協助翻譯" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help Translate"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "协助翻译"
+          }
+        }
+      }
+    },
+    "協助翻譯 DiskLens" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help Translate DiskLens"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "协助翻译 DiskLens"
+          }
+        }
+      }
+    },
+    "協助翻譯…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help Translate…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "协助翻译…"
+          }
+        }
+      }
+    },
     "即將推出" : {
       "localizations" : {
         "en" : {
@@ -1935,6 +2127,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "即将推出"
+          }
+        }
+      }
+    },
+    "原始碼" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source Code"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "源代码"
           }
         }
       }
@@ -2431,6 +2639,38 @@
         }
       }
     },
+    "回報問題…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Report a Problem…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "报告问题…"
+          }
+        }
+      }
+    },
+    "回報與建議" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reports & Suggestions"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "报告与建议"
+          }
+        }
+      }
+    },
     "回答僅供參考" : {
       "localizations" : {
         "en" : {
@@ -2491,6 +2731,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在 GitHub 上查看源代码"
+          }
+        }
+      }
+    },
+    "在 GitHub 上給顆星" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Star DiskLens on GitHub"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 GitHub 上点个星"
           }
         }
       }
@@ -2901,6 +3157,22 @@
         }
       }
     },
+    "已拷貝" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copied"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已拷贝"
+          }
+        }
+      }
+    },
     "已授權的磁碟與資料夾" : {
       "localizations" : {
         "en" : {
@@ -2997,6 +3269,22 @@
         }
       }
     },
+    "建議新功能…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suggest a Feature…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "建议新功能…"
+          }
+        }
+      }
+    },
     "影片" : {
       "localizations" : {
         "en" : {
@@ -3025,6 +3313,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "缓存"
+          }
+        }
+      }
+    },
+    "意見回饋" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feedback"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "反馈"
           }
         }
       }
@@ -3157,6 +3461,22 @@
         }
       }
     },
+    "拷貝" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拷贝"
+          }
+        }
+      }
+    },
     "拷貝清單" : {
       "localizations" : {
         "en" : {
@@ -3169,6 +3489,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "拷贝列表"
+          }
+        }
+      }
+    },
+    "拷貝診斷資訊" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy Diagnostic Info"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拷贝诊断信息"
           }
         }
       }
@@ -3301,6 +3637,22 @@
         }
       }
     },
+    "授權" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "License"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "许可证"
+          }
+        }
+      }
+    },
     "授權讀取磁碟" : {
       "localizations" : {
         "en" : {
@@ -3429,6 +3781,22 @@
         }
       }
     },
+    "支持 DiskLens" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support DiskLens"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "支持 DiskLens"
+          }
+        }
+      }
+    },
     "文件" : {
       "localizations" : {
         "en" : {
@@ -3541,6 +3909,22 @@
         }
       }
     },
+    "會打開 GitHub 的回報表單，並自動帶入版本與系統資訊，不含任何檔案資訊。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opens the GitHub report form with your app version and system details filled in. No file information is included."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会打开 GitHub 的报告表单，并自动填入版本与系统信息，不含任何文件信息。"
+          }
+        }
+      }
+    },
     "會用到哪些資料" : {
       "localizations" : {
         "en" : {
@@ -3553,6 +3937,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "会用到哪些数据"
+          }
+        }
+      }
+    },
+    "有想要的功能" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Want a Feature?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "想要新功能"
           }
         }
       }
@@ -3645,6 +4045,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "查看无法读取的文件夹"
+          }
+        }
+      }
+    },
+    "條款" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terms"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "条款"
           }
         }
       }
@@ -3777,6 +4193,22 @@
         }
       }
     },
+    "檢查新版本" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Check for New Versions"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查新版本"
+          }
+        }
+      }
+    },
     "歡迎使用 DiskLens" : {
       "localizations" : {
         "en" : {
@@ -3789,6 +4221,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "欢迎使用 DiskLens"
+          }
+        }
+      }
+    },
+    "歡迎到 GitHub 分享你的想法。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share your ideas on GitHub."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "欢迎到 GitHub 分享你的想法。"
           }
         }
       }
@@ -4225,6 +4673,22 @@
         }
       }
     },
+    "版本" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本"
+          }
+        }
+      }
+    },
     "版本 %@" : {
       "localizations" : {
         "en" : {
@@ -4237,6 +4701,44 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "版本 %@"
+          }
+        }
+      }
+    },
+    "版本 %@（%@）" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version %1$@ (%2$@)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本 %1$@（%2$@）"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本 %1$@（%2$@）"
+          }
+        }
+      }
+    },
+    "版本類型" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edition"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本类型"
           }
         }
       }
@@ -4269,6 +4771,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "由 %@ 回答"
+          }
+        }
+      }
+    },
+    "由 %@ 設計與開發" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Designed and developed by %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由 %@ 设计与开发"
           }
         }
       }
@@ -4321,6 +4839,22 @@
         }
       }
     },
+    "目前支援繁體中文、简体中文和 English。翻譯可以由人工或 AI 協助完成。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Currently available in 繁體中文, 简体中文 and English. Translations can be done by people or with AI help."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目前支持繁體中文、简体中文和 English。翻译可以由人工或 AI 协助完成。"
+          }
+        }
+      }
+    },
     "目前沒有可用的 AI 工具。" : {
       "localizations" : {
         "en" : {
@@ -4349,6 +4883,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "目标位置与原位置相同或位于其内。"
+          }
+        }
+      }
+    },
+    "直接下載版" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Direct Download"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "直接下载版"
           }
         }
       }
@@ -4413,6 +4963,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "看看空间都去哪儿了"
+          }
+        }
+      }
+    },
+    "看見磁碟空間都跑去哪了。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See where your disk space went."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "看见磁盘空间都去哪了。"
           }
         }
       }
@@ -4705,6 +5271,54 @@
         }
       }
     },
+    "翻譯" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translation"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻译"
+          }
+        }
+      }
+    },
+    "自行建置版" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Built from Source"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自行构建版"
+          }
+        }
+      }
+    },
+    "致謝與版權" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acknowledgments & Copyright"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "致谢与版权"
+          }
+        }
+      }
+    },
     "舊的記錄檔" : {
       "localizations" : {
         "en" : {
@@ -4829,6 +5443,22 @@
         }
       }
     },
+    "診斷資訊" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagnostic Info"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "诊断信息"
+          }
+        }
+      }
+    },
     "語言" : {
       "localizations" : {
         "en" : {
@@ -4889,6 +5519,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法读取"
+          }
+        }
+      }
+    },
+    "讓 DiskLens 支援你的語言" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bring DiskLens to Your Language"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "让 DiskLens 支持你的语言"
           }
         }
       }
@@ -5243,6 +5889,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "超时"
+          }
+        }
+      }
+    },
+    "遇到問題或當機" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Problems or Crashes"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "遇到问题或崩溃"
           }
         }
       }
@@ -5663,6 +6325,38 @@
         }
       }
     },
+    "關於" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于"
+          }
+        }
+      }
+    },
+    "關於 DiskLens" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About DiskLens"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于 DiskLens"
+          }
+        }
+      }
+    },
     "關閉" : {
       "localizations" : {
         "en" : {
@@ -5696,6 +6390,22 @@
       }
     },
     "隱私" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐私"
+          }
+        }
+      }
+    },
+    "隱私權" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {

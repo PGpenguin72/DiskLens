@@ -80,6 +80,8 @@ The app has environment hooks for automated checks:
 | `DISKLENS_DEMO_MULTISELECT=1` | multi-select mode with 3 rows selected |
 | `DISKLENS_DEMO_AI=consent\|results\|settings\|noprovider` | show AI sheets (`DISKLENS_DEMO_AI_PROVIDER=apple`) |
 | `DISKLENS_DEMO_ONBOARDING=1` | show the tour |
+| `DISKLENS_DEMO_ABOUT=1` | open the About window |
+| `DISKLENS_SETTINGS_PANE=general\|ai\|feedback\|about` | open Settings on that tab |
 | `DISKLENS_FAKE_NO_FDA=1` | pretend Full Disk Access is missing |
 | `DISKLENS_AI_SELFTEST=<path>` (+ `_RUN=<provider>`) | headless AI prompt / live run |
 
