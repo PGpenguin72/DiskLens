@@ -83,7 +83,12 @@ Use the exact text in [`docs/APP_STORE.md`](APP_STORE.md) under "App Store 頁�
    - Promotional text, description and keywords from `APP_STORE.md` (per language).
    - Support URL and Marketing URL: see Facts.
    - Copyright: `2026 PGpenguin72`
-   - **Screenshots**: 1 to 10 images, each exactly 2880×1800, 2560×1600, 1440×900 or 1280×800 pixels. If none exist yet, stop and ask the owner. Claude can generate them from the app with a demo folder so no personal file names appear.
+   - **Screenshots**: ready-made, 2880×1800, made from a demo disk (no personal files). Upload `1.png`–`5.png` in that order for each localization:
+     - Chinese (Traditional): `~/Downloads/Ringwise-AppStore-Screenshots/zh-Hant/`
+     - Chinese (Simplified): `~/Downloads/Ringwise-AppStore-Screenshots/zh-Hans/`
+     - English (U.S.): `~/Downloads/Ringwise-AppStore-Screenshots/en/`
+
+     If the folder is missing, regenerate it (see "Regenerating screenshots" below) or ask the owner.
    - App Review Information: contact name, email `developer@pg72.tw` and phone (🧑 the owner provides the phone number). "Sign-in required": **No**. Notes: paste the English review notes from `APP_STORE.md`.
    - Version release: **Manually release this version**.
 
@@ -128,6 +133,19 @@ Do **not** commit the Team ID change unless the owner wants it public. A Team ID
 2. Check that every required field shows no warnings.
 3. 🧑 When the owner says "submit": **Add for Review** → **Submit to App Review**.
 4. Review usually takes 1–3 days. If Apple sends questions or a rejection, copy the full message to the owner (and to Claude/Codex in the repo) instead of replying on your own.
+
+## Regenerating screenshots
+
+Run in the repo. It launches a test copy with `RINGWISE_DEMO_TREE=1` (made-up disk, Apple apps only), captures each view and composes the store image. Never capture the owner's real scan.
+
+```bash
+./scripts/build-app.sh
+# capture a view (examples): RINGWISE_DEMO_TREE=1 RINGWISE_AUTOSCAN=/ RINGWISE_SIDEBAR=cleanup dist/Ringwise.app/Contents/MacOS/Ringwise -AppleLanguages '(en)'
+# then compose:
+swift scripts/make-store-shot.swift window.png out.png "Headline" "Subtitle"
+```
+
+Headlines used (1–5): 一圈一圈，看清你的磁碟 · 每個 App 佔多少，一目了然 · 安心清理，每一項都標示安全程度 · 看不懂的檔案？問 AI 就知道 · 影片、照片、開發快取，分類清清楚楚.
 
 ## If something goes wrong
 

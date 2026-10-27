@@ -43,7 +43,7 @@
 - [ ] 用 App Store 版實際跑一次：第一次「掃描整個磁碟」會跳出授權視窗，選 Macintosh HD 後能正常掃描；重開 App 後不用再授權。
 - [ ] 丟到垃圾桶在沙盒中能正常運作（只能動到已授權範圍內的檔案）。
 - [ ] 沒有開啟 Apple Intelligence 的 Mac 上，AI 功能會顯示清楚的說明，而且不會當掉。
-- [ ] 截圖：至少 1 張，建議 3–5 張，尺寸 2880×1800 或 1440×900。截圖中不要出現私人檔名。
+- [x] 截圖：已產生 5 張 × 3 種語言（2880×1800，使用示範磁碟，沒有私人檔名），放在 `~/Downloads/Ringwise-AppStore-Screenshots/`。
 - [ ] `OverlayScrollerStyle`（讓表格捲軸變成浮動式）用到 Objective-C runtime 替換方法實作。這不是私有 API，但如果審核提出疑問，可以在 App Store 版拿掉，改回系統預設捲軸。
 
 ## 隱私權問卷（App Privacy）
