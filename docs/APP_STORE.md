@@ -183,7 +183,7 @@ Requires macOS 26 or later.
 
 ### 網址（三種語言共用）
 
-- 支援網址：`https://github.com/PGpenguin72/DiskLens/issues`
+- 支援網址：`https://github.com/PGpenguin72/DiskLens/issues`（聯絡信箱：developer@pg72.tw）
 - 行銷網址：`https://github.com/PGpenguin72/DiskLens`
 - 隱私權政策網址：`https://github.com/PGpenguin72/DiskLens/blob/main/docs/PRIVACY.md`
 

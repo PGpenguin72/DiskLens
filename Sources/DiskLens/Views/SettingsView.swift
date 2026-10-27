@@ -94,7 +94,13 @@ private struct FeedbackSettings: View {
                     Link("回報問題…", destination: AppInfo.bugReport)
                 } label: {
                     Text("遇到問題或當機")
-                    Text("會打開 GitHub 的回報表單，並自動帶入版本與系統資訊，不含任何檔案資訊。")
+                    Text("會打開 GitHub 的回報表單，並附上標示清楚的診斷資訊（版本與系統資訊，不含任何檔案資訊）。")
+                }
+                LabeledContent {
+                    Link("寄 Email…", destination: AppInfo.emailReport)
+                } label: {
+                    Text("用 Email 回報")
+                    Text("沒有 GitHub 帳號也可以寄信到 \(AppInfo.feedbackEmail)，信件底部會附上診斷資訊。")
                 }
                 LabeledContent {
                     Link("建議新功能…", destination: AppInfo.featureRequest)
@@ -109,6 +115,7 @@ private struct FeedbackSettings: View {
                     }
                 } label: {
                     Text("診斷資訊")
+                    Text(verbatim: AppInfo.diagnosticsDisclosure)
                     Text(verbatim: AppInfo.diagnostics)
                         .font(.caption.monospaced())
                         .textSelection(.enabled)

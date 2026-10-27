@@ -2,7 +2,7 @@
 
 **English** · [繁體中文](PRIVACY.zh-Hant.md) · [简体中文](PRIVACY.zh-Hans.md)
 
-_Last updated: 2026-10-26_
+_Last updated: 2026-10-27_
 
 DiskLens is a disk-space analyzer that runs entirely on your Mac. This policy explains what data it touches and where that data goes. Short version: **DiskLens collects nothing and sends nothing anywhere.** The only exception is the optional AI feature: you have to switch it on yourself, and if you pick a command-line AI tool instead of Apple's on-device model, it hands a small amount of file metadata to that tool.
 
@@ -38,6 +38,14 @@ If you choose to use "Ask AI", you pick one of these providers. Before the first
 - **What the tool can do:** DiskLens starts it in a read-only, no-tools mode inside an empty temporary folder. The answer is only displayed. It never deletes, moves or changes anything.
 - You can revoke consent or turn the feature off at any time in **Settings → AI**.
 
+## Feedback and bug reports
+
+Reports are only sent when **you** choose to send one:
+
+- **By email** (to developer@pg72.tw) or **on GitHub**. DiskLens opens your mail app or browser with a draft, and nothing is sent until you send it yourself.
+- Drafts include a clearly labeled **diagnostic info** section: app version and build, edition, macOS version, Mac model and interface language. It contains **no files, paths or scan results**, and you can edit or delete it before sending.
+- Emails are used only to answer you and fix problems. GitHub issues are public and governed by GitHub's terms.
+
 ## Deleting files
 
 DiskLens only moves items to the Trash after you confirm, and it refuses to touch protected system locations. Items stay recoverable until you empty the Trash.
@@ -52,4 +60,4 @@ Changes to this policy are published in this repository, and the date at the top
 
 ## Contact
 
-Questions? Open an issue at <https://github.com/PGpenguin72/DiskLens/issues>.
+Questions? Email developer@pg72.tw or open an issue at <https://github.com/PGpenguin72/DiskLens/issues>.

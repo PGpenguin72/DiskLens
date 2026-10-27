@@ -703,6 +703,22 @@
         }
       }
     },
+    "DiskLens 問題回報" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DiskLens Problem Report"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DiskLens 问题报告"
+          }
+        }
+      }
+    },
     "DiskLens 是免費的開源軟體，你的支持是持續更新的動力。" : {
       "localizations" : {
         "en" : {
@@ -1217,6 +1233,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "—"
+          }
+        }
+      }
+    },
+    "—— 診斷資訊（由 DiskLens 自動附上）——" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "—— Diagnostic info (added automatically by DiskLens) ——"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "—— 诊断信息（由 DiskLens 自动附上）——"
           }
         }
       }
@@ -2255,6 +2287,22 @@
         }
       }
     },
+    "只包含 App 版本、系統版本、機型與介面語言，不含任何檔案、路徑或掃描結果。你可以在送出前刪除這一段。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contains only the app version, macOS version, Mac model and interface language. No files, paths or scan results. You can delete this section before sending."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "只包含 App 版本、系统版本、机型与界面语言，不含任何文件、路径或扫描结果。你可以在发送前删除这一段。"
+          }
+        }
+      }
+    },
     "只有檔案與資料夾的路徑、名稱、大小、修改日期、項目數量，以及 DiskLens 自己的分類。**絕對不會讀取或傳送檔案內容。**" : {
       "localizations" : {
         "en" : {
@@ -3035,6 +3083,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "容器"
+          }
+        }
+      }
+    },
+    "寄 Email…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send Email…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送邮件…"
           }
         }
       }
@@ -3909,18 +3973,18 @@
         }
       }
     },
-    "會打開 GitHub 的回報表單，並自動帶入版本與系統資訊，不含任何檔案資訊。" : {
+    "會打開 GitHub 的回報表單，並附上標示清楚的診斷資訊（版本與系統資訊，不含任何檔案資訊）。" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opens the GitHub report form with your app version and system details filled in. No file information is included."
+            "value" : "Opens the GitHub report form with clearly labeled diagnostic info (version and system details, no file information)."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "会打开 GitHub 的报告表单，并自动填入版本与系统信息，不含任何文件信息。"
+            "value" : "会打开 GitHub 的报告表单，并附上标注清楚的诊断信息（版本与系统信息，不含任何文件信息）。"
           }
         }
       }
@@ -4369,6 +4433,22 @@
         }
       }
     },
+    "沒有 GitHub 帳號也可以寄信到 %@，信件底部會附上診斷資訊。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No GitHub account? Email %@. Diagnostic info is added at the bottom of the message."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有 GitHub 账号也可以发邮件到 %@，邮件底部会附上诊断信息。"
+          }
+        }
+      }
+    },
     "沒有可搬移的項目。" : {
       "localizations" : {
         "en" : {
@@ -4755,6 +4835,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "用 AI 说明文件和文件夹"
+          }
+        }
+      }
+    },
+    "用 Email 回報" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Report by Email"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用邮件报告"
+          }
+        }
+      }
+    },
+    "用 Email 回報…" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Report by Email…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用邮件报告…"
           }
         }
       }
@@ -5487,6 +5599,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "请在访达中清倒废纸篓。"
+          }
+        }
+      }
+    },
+    "請描述你遇到的問題，或想給 DiskLens 的建議：" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please describe the problem, or your suggestion for DiskLens:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请描述你遇到的问题，或想给 DiskLens 的建议："
           }
         }
       }

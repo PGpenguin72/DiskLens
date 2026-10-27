@@ -73,6 +73,7 @@ struct AppCommands: Commands {
             Button("新手導覽") { model.showingOnboarding = true }
             Divider()
             Link("回報問題…", destination: AppInfo.bugReport)
+            Link("用 Email 回報…", destination: AppInfo.emailReport)
             Link("建議新功能…", destination: AppInfo.featureRequest)
             Button("拷貝診斷資訊") { AppInfo.copyDiagnostics() }
             Divider()

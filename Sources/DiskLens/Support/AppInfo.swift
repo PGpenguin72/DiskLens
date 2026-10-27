@@ -63,9 +63,19 @@ enum AppInfo {
         """
     }
 
+    /// What the diagnostics contain, shown wherever they are sent or copied.
+    static var diagnosticsDisclosure: String {
+        String(localized: "只包含 App 版本、系統版本、機型與介面語言，不含任何檔案、路徑或掃描結果。你可以在送出前刪除這一段。")
+    }
+
+    /// Diagnostics with a clear label, for email, GitHub and the clipboard.
+    static var labeledDiagnostics: String {
+        String(localized: "—— 診斷資訊（由 DiskLens 自動附上）——") + "\n" + diagnosticsDisclosure + "\n\n" + diagnostics
+    }
+
     static func copyDiagnostics() {
         NSPasteboard.general.clearContents()
-        NSPasteboard.general.setString(diagnostics, forType: .string)
+        NSPasteboard.general.setString(labeledDiagnostics, forType: .string)
     }
 
     // MARK: Links
@@ -84,7 +94,21 @@ enum AppInfo {
         c.queryItems = [
             URLQueryItem(name: "template", value: "bug_report.yml"),
             URLQueryItem(name: "macos", value: "\(macOSVersion), \(macModel) (\(architecture))"),
-            URLQueryItem(name: "what", value: "\n\n---\n\(diagnostics)"),
+            URLQueryItem(name: "what", value: "\n\n\n" + labeledDiagnostics),
+        ]
+        return c.url!
+    }
+
+    static let feedbackEmail = "developer@pg72.tw"
+
+    /// Email to the developer with the labeled diagnostics at the bottom of the body.
+    static var emailReport: URL {
+        var c = URLComponents()
+        c.scheme = "mailto"
+        c.path = feedbackEmail
+        c.queryItems = [
+            URLQueryItem(name: "subject", value: String(localized: "DiskLens 問題回報") + " (\(version), \(build))"),
+            URLQueryItem(name: "body", value: String(localized: "請描述你遇到的問題，或想給 DiskLens 的建議：") + "\n\n\n\n\n" + labeledDiagnostics),
         ]
         return c.url!
     }
