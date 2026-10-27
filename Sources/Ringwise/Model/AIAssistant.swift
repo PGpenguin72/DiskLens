@@ -225,9 +225,15 @@ final class AIAssistant {
 
     /// Fills the panel with sample answers for UI checks (`RINGWISE_DEMO_AI=results`).
     func showDemoResults(_ items: [AIRequestItem]) {
-        showPanel(items: items, totalSelected: items.count + 3, providerName: "Claude Code")
+        // Screenshot mode shows the App Store build's provider, with answers matching the demo caches.
+        let demo = DemoData.isEnabled
+        showPanel(items: items, totalSelected: items.count + 3, providerName: demo ? "Apple Intelligence" : "Claude Code")
         panel.notice = String(localized: "共選取 \(items.count + 3) 個項目，只說明最大的 \(items.count) 個。")
-        let samples: [(AISafety, String, String?, String)] = [
+        let samples: [(AISafety, String, String?, String)] = demo ? [
+            (.caution, String(localized: "Xcode 的索引與建置快取。"), "Xcode", String(localized: "下次開啟專案時會重新建立索引，會花比較久。")),
+            (.safe, String(localized: "Safari 暫存的網頁資料，用來加快載入速度。"), "Safari", String(localized: "會自動重新產生，網頁第一次開啟可能稍慢。")),
+            (.safe, String(localized: "「音樂」App 下載的專輯封面快取。"), String(localized: "音樂"), String(localized: "需要時會重新下載。")),
+        ] : [
             (.safe, "App 暫存的快取檔案，用來加快載入速度。", "Apple", "會自動重新產生，第一次開啟可能稍慢。"),
             (.caution, "開發工具的建置產物與索引資料。", "Xcode", "下次建置需要重新編譯，會花比較久。"),
             (.keep, "App 的設定與使用者資料。", nil, "可能遺失設定或登入狀態。"),

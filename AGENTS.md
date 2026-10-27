@@ -83,6 +83,7 @@ The app has environment hooks for automated checks:
 | `RINGWISE_DEMO_ABOUT=1` | open the About window |
 | `RINGWISE_SETTINGS_PANE=general\|ai\|feedback\|about` | open Settings on that tab |
 | `RINGWISE_FAKE_NO_FDA=1` | pretend Full Disk Access is missing |
+| `RINGWISE_DEMO_TREE=1` | made-up disk, home and volume instead of real files (App Store screenshots; compose with `scripts/make-store-shot.swift`) |
 | `RINGWISE_AI_SELFTEST=<path>` (+ `_RUN=<provider>`) | headless AI prompt / live run |
 
 To screenshot: launch `.build/release/Ringwise` in the background, find its window by **your own PID** with `CGWindowListCopyWindowInfo`, then `screencapture -x -o -l <windowid>`.

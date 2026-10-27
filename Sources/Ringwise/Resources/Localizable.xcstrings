@@ -965,6 +965,22 @@
         }
       }
     },
+    "Safari 暫存的網頁資料，用來加快載入速度。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Web data Safari caches to load pages faster."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Safari 缓存的网页数据，用于加快加载速度。"
+          }
+        }
+      }
+    },
     "SwiftUI 預覽使用的資料，會自動重建。" : {
       "localizations" : {
         "en" : {
@@ -1057,6 +1073,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcode 的构建中间文件和索引，下次构建时会重新生成。"
+          }
+        }
+      }
+    },
+    "Xcode 的索引與建置快取。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode's index and build caches."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode 的索引与构建缓存。"
           }
         }
       }
@@ -1313,6 +1345,22 @@
         }
       }
     },
+    "「音樂」App 下載的專輯封面快取。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Album artwork cached by the Music app."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "“音乐”App 下载的专辑封面缓存。"
+          }
+        }
+      }
+    },
     "一圈一圈，看清你的磁碟" : {
       "localizations" : {
         "en" : {
@@ -1501,6 +1549,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "前进（⌘]）"
+          }
+        }
+      }
+    },
+    "下次開啟專案時會重新建立索引，會花比較久。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode rebuilds the index the next time you open a project, which takes a while."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下次打开项目时会重新建立索引，耗时较长。"
           }
         }
       }
@@ -4033,6 +4097,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "会用到哪些数据"
+          }
+        }
+      }
+    },
+    "會自動重新產生，網頁第一次開啟可能稍慢。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It's recreated automatically. Pages may load a little slower the first time."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会自动重新生成，网页首次打开可能稍慢。"
           }
         }
       }
@@ -6625,6 +6705,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "需注意：可能需要重新下载或登录"
+          }
+        }
+      }
+    },
+    "需要時會重新下載。" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "It's downloaded again when needed."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要时会重新下载。"
           }
         }
       }

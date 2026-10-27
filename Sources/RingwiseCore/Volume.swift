@@ -8,6 +8,11 @@ public struct VolumeInfo: Sendable {
     /// Free space including purgeable data macOS can reclaim (what Finder shows).
     public var availableIncludingPurgeable: Int64
 
+    public init(name: String, total: Int64, available: Int64, availableIncludingPurgeable: Int64) {
+        self.name = name; self.total = total; self.available = available
+        self.availableIncludingPurgeable = availableIncludingPurgeable
+    }
+
     public var used: Int64 { total - available }
     public var purgeable: Int64 { max(0, availableIncludingPurgeable - available) }
 

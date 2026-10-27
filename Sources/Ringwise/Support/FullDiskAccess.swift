@@ -9,6 +9,7 @@ enum FullDiskAccess {
     /// Probes TCC-protected locations. Returns `true` when access is granted or cannot be determined.
     static func isGranted() -> Bool {
         if ProcessInfo.processInfo.environment["RINGWISE_FAKE_NO_FDA"] != nil { return false }
+        if DemoData.isEnabled { return true }
         let home = UserHome.path
 
         // The system TCC database exists on every Mac and is only readable with Full Disk Access.

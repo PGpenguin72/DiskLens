@@ -156,7 +156,7 @@ final class AppModel {
 
     /// Refreshes volume capacity and Full Disk Access state. Cheap; call on activation.
     func refreshEnvironment() {
-        volume = VolumeInfo.current()
+        volume = DemoData.isEnabled ? DemoData.volume : VolumeInfo.current()
         hasFullDiskAccess = FullDiskAccess.isGranted()
     }
 
@@ -192,6 +192,12 @@ final class AppModel {
         // Sandbox (App Store build): make sure the user has granted this location; no-op otherwise.
         guard let root = ScanAccess.prepare(requested) else { return }
         resetTree()
+        // Screenshot mode: a made-up disk instead of the user's files.
+        if DemoData.isEnabled {
+            scanRoot = root
+            finishScan(DemoData.makeTree(), duration: 18.6)
+            return
+        }
         scanRoot = root
         scanState = .scanning
         scanElapsed = 0
