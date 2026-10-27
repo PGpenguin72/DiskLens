@@ -73,7 +73,9 @@
 **描述**：
 
 ```
-Ringwise 幫你在幾十秒內掃完整顆磁碟，用漂亮的環狀圖一眼看出空間都跑去哪了。
+一圈一圈，看清你的磁碟。
+
+Ringwise 幫你在幾十秒內掃完整顆磁碟，用漂亮的環狀圖一眼看出空間都跑去哪了，再安心地把不需要的東西清掉。
 
 【快速又流暢】
 • 多執行緒掃描，數百萬個檔案也只要幾十秒
@@ -91,6 +93,11 @@ Ringwise 幫你在幾十秒內掃完整顆磁碟，用漂亮的環狀圖一眼�
 
 【AI 小幫手】
 看不懂某個檔案是什麼？請 Apple 裝置端模型說明它是什麼、能不能刪。完全在你的 Mac 上處理，不會上傳任何資料，而且一定會先徵求你的同意。
+
+【貼心的小細節】
+• 多選模式：單擊就能一次選很多個，底部即時顯示可釋放的空間
+• 支援繁體中文、简体中文、English，可在設定裡切換
+• 第一次使用有新手導覽，馬上就會用
 
 【安全第一】
 • 只會把項目移到垃圾桶，清空前都能復原
@@ -113,7 +120,9 @@ Ringwise 幫你在幾十秒內掃完整顆磁碟，用漂亮的環狀圖一眼�
 **描述**：
 
 ```
-Ringwise 帮你在几十秒内扫完整个磁盘，用漂亮的环形图一眼看出空间都去哪了。
+一圈一圈，看清你的磁盘。
+
+Ringwise 帮你在几十秒内扫完整个磁盘，用漂亮的环形图一眼看出空间都去哪了，再放心地把不需要的东西清理掉。
 
 【快速又流畅】
 • 多线程扫描，数百万个文件也只要几十秒
@@ -131,6 +140,11 @@ Ringwise 帮你在几十秒内扫完整个磁盘，用漂亮的环形图一眼�
 
 【AI 小助手】
 看不懂某个文件是什么？请 Apple 设备端模型说明它是什么、能不能删。完全在你的 Mac 上处理，不会上传任何数据，而且一定会先征求你的同意。
+
+【贴心的小细节】
+• 多选模式：单击即可一次选中多个项目，底部实时显示可释放的空间
+• 支持繁體中文、简体中文、English，可在设置中切换
+• 首次使用有新手导览，马上就会用
 
 【安全第一】
 • 只会把项目移到废纸篓，清倒前都能恢复
@@ -153,7 +167,9 @@ Ringwise 帮你在几十秒内扫完整个磁盘，用漂亮的环形图一眼�
 **Description**:
 
 ```
-Ringwise scans your entire disk in seconds and shows where your space went in a beautiful sunburst chart.
+Your disk, ring by ring.
+
+Ringwise scans your entire disk in seconds, shows where your space went in a beautiful sunburst chart, and helps you clean up safely.
 
 FAST AND SMOOTH
 • Multithreaded scanning handles millions of files in seconds
@@ -171,6 +187,11 @@ FIND WHAT YOU CAN CLEAN
 
 AI HELPER
 Not sure what something is? Ask Apple's on-device model what it is and whether it's safe to delete. Everything is processed on your Mac, nothing is uploaded, and Ringwise always asks for your consent first.
+
+THOUGHTFUL DETAILS
+• Multi-select mode: pick many items with plain clicks and see the space you'll free
+• Available in English, 繁體中文 and 简体中文, switchable in Settings
+• A short welcome tour gets you started
 
 SAFE BY DESIGN
 • Items only go to the Trash, so you can restore them until you empty it
