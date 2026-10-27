@@ -3,6 +3,8 @@ import DiskLensCore
 
 /// Path + stats on top; sunburst card and table card side by side.
 struct FolderBrowserView: View {
+    @Environment(AppModel.self) private var model
+
     var body: some View {
         VStack(spacing: 12) {
             HStack(spacing: 10) {
@@ -10,8 +12,12 @@ struct FolderBrowserView: View {
                 ScanStats()
             }
             HStack(alignment: .top, spacing: 12) {
-                ChartCard()
-                    .frame(width: 330)
+                // The AI panel takes the right side; give its width to the table instead of the chart.
+                if !model.ai.showingPanel {
+                    ChartCard()
+                        .frame(width: 330)
+                        .transition(.move(edge: .leading).combined(with: .opacity))
+                }
                 FolderTable()
                     .glassCard()
             }

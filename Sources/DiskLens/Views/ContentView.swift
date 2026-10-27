@@ -14,13 +14,25 @@ struct ContentView: View {
         } detail: {
             ZStack(alignment: .bottom) {
                 AmbientBackground()
-                VStack(spacing: 12) {
-                    if !model.hasFullDiskAccess && !model.fullDiskAccessBannerDismissed {
-                        FullDiskAccessBanner()
+                HStack(spacing: 12) {
+                    VStack(spacing: 12) {
+                        if !model.hasFullDiskAccess && !model.fullDiskAccessBannerDismissed {
+                            FullDiskAccessBanner()
+                        }
+                        DetailView()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
-                    DetailView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    // AI answers slide in as a glass panel inside the content area. The system
+                    // `.inspector` rebuilt the window toolbar during layout and crashed AppKit.
+                    if model.ai.showingPanel {
+                        AIResultsPanel()
+                            .frame(width: 360)
+                            .frame(maxHeight: .infinity)
+                            .glassCard()
+                            .transition(.move(edge: .trailing).combined(with: .opacity))
+                    }
                 }
+                .animation(.spring(duration: 0.35), value: model.ai.showingPanel)
                 .padding(16)
                 // Leave room for the floating selection bar so it never covers the last rows.
                 .padding(.bottom, model.hasTree ? 58 : 0)

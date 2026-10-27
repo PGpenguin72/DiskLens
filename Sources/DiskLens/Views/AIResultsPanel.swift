@@ -1,7 +1,7 @@
 import SwiftUI
 import DiskLensCore
 
-/// Inspector with the AI's explanations. Display-only: actions here are the user's own clicks.
+/// Side panel with the AI's explanations. Display-only: actions here are the user's own clicks.
 struct AIResultsPanel: View {
     @Environment(AppModel.self) private var model
 
@@ -37,7 +37,6 @@ struct AIResultsPanel: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Label(error, systemImage: "exclamationmark.triangle.fill")
                         .foregroundStyle(.orange)
-                        .fixedSize(horizontal: false, vertical: true)
                     if !panel.items.isEmpty {
                         Button("重試", systemImage: "arrow.clockwise") { ai.askAgain() }
                             .buttonStyle(.glass)
@@ -90,7 +89,6 @@ struct AIResultsPanel: View {
             Text("AI 的回答僅供參考，可能有誤。DiskLens 不會自動刪除任何檔案。")
                 .font(.caption2)
                 .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
         }
         .padding(14)
     }
@@ -126,7 +124,6 @@ private struct AIAnswerCard: View {
 
             if let answer {
                 Text(answer.what)
-                    .fixedSize(horizontal: false, vertical: true)
                     .textSelection(.enabled)
                 if let owner = answer.owner {
                     LabeledLine(title: "來源", value: owner)
@@ -167,7 +164,7 @@ private struct LabeledLine: View {
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: 6) {
             Text(title).font(.caption.weight(.semibold)).foregroundStyle(.secondary)
-            Text(value).font(.callout).fixedSize(horizontal: false, vertical: true)
+            Text(value).font(.callout)
         }
     }
 }
@@ -199,17 +196,14 @@ struct SafetyBadge: View {
     }
 }
 
-/// Consent sheet, "no provider" sheet and the results inspector, attached to the main window.
+/// Consent sheet and "no provider" sheet, attached to the main window. (The results panel lives in
+/// ContentView's detail area.)
 struct AIPresentation: ViewModifier {
     @Environment(AppModel.self) private var model
 
     func body(content: Content) -> some View {
         @Bindable var ai = model.ai
         content
-            .inspector(isPresented: $ai.showingPanel) {
-                AIResultsPanel()
-                    .inspectorColumnWidth(min: 320, ideal: 380, max: 520)
-            }
             .sheet(item: $ai.consentRequest) { request in
                 AIConsentSheet(request: request,
                                onAccept: { ai.acceptConsent(request) },
